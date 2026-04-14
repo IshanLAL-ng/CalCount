@@ -6,6 +6,6 @@ namespace CalCount.Models.temp
 {
     internal class Aayush
     {
-     
+        String name;
     }
 }
