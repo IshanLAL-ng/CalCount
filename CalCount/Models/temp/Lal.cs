@@ -4,6 +4,7 @@ using System.Text;
 
 namespace CalCount.Models.temp
 {
+    String name = "";
     internal class Lal
     {
 
