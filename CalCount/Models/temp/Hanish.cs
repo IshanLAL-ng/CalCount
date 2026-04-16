@@ -6,7 +6,5 @@ namespace CalCount.Models.temp
 {
     internal class Hanish
     {
-
     }
-    
 }
