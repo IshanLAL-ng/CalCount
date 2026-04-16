@@ -6,6 +6,6 @@ namespace CalCount.Models.temp
 {
     internal class Lal
     {
-       
+        string name;
     }
 }
