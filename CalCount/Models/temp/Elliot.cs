@@ -6,10 +6,6 @@ namespace CalCount.Models.temp
 {
     internal class Elliot
     {
-        string elliots_quote;
-            
-             
-            
-        
+  
     }
 }
