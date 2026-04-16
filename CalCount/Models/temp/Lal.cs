@@ -6,6 +6,6 @@ namespace CalCount.Models.temp
 {
     internal class Lal
     {
-     internal CodePagesEncodingProvider: binding Home_Screen.setGo;
+     
     }
 }
