@@ -12,6 +12,9 @@ public partial class PongPage : ContentPage
     double paddleHeight = 60;
     IDispatcherTimer? timer;
 
+    int leftScore = 0, rightScore = 0;
+    double baseSpeed = 3; // controlled by level
+
     public PongPage()
     {
         InitializeComponent();
@@ -34,6 +37,9 @@ public partial class PongPage : ContentPage
             timer.Tick += OnTick;
             timer.Start();
         }
+
+        // default level (Normal)
+        baseSpeed = 3;
     }
 
     void UpdateLayoutPositions()
@@ -61,6 +67,8 @@ public partial class PongPage : ContentPage
             else
             {
                 // right player scores
+                rightScore++;
+                RightScoreLabel.Text = $"Right: {rightScore}";
                 ResetBall(centerRight: true);
             }
         }
@@ -75,6 +83,8 @@ public partial class PongPage : ContentPage
             else
             {
                 // left player scores
+                leftScore++;
+                LeftScoreLabel.Text = $"Left: {leftScore}";
                 ResetBall(centerRight: false);
             }
         }
@@ -86,8 +96,11 @@ public partial class PongPage : ContentPage
     {
         ballX = (PlayArea.Width - Ball.Width) / 2;
         ballY = (PlayArea.Height - Ball.Height) / 2;
-        ballVX = centerRight ? Math.Abs(ballVX) : -Math.Abs(ballVX);
-        ballVY = 2;
+        // set speed according to level
+        ballVX = centerRight ? Math.Abs(baseSpeed) : -Math.Abs(baseSpeed);
+        // small random vertical direction
+        var sign = (new Random().Next(0, 2) == 0) ? -1 : 1;
+        ballVY = sign * baseSpeed * 0.6;
     }
 
     void OnP1Up(object sender, EventArgs e)
@@ -114,6 +127,82 @@ public partial class PongPage : ContentPage
         UpdateLayoutPositions();
     }
 
+    void OnLevelEasy(object sender, EventArgs e)
+    {
+        baseSpeed = 2;
+        ballVX = Math.Sign(ballVX) * baseSpeed;
+        ballVY = Math.Sign(ballVY) * baseSpeed * 0.6;
+    }
+
+    void OnLevelNormal(object sender, EventArgs e)
+    {
+        baseSpeed = 3;
+        ballVX = Math.Sign(ballVX) * baseSpeed;
+        ballVY = Math.Sign(ballVY) * baseSpeed * 0.6;
+    }
+
+    void OnLevelHard(object sender, EventArgs e)
+    {
+        baseSpeed = 5;
+        ballVX = Math.Sign(ballVX) * baseSpeed;
+        ballVY = Math.Sign(ballVY) * baseSpeed * 0.6;
+    }
+
+#if WINDOWS
+    Microsoft.UI.Xaml.UIElement? nativeElement;
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        try
+        {
+            var nativeWindow = Application.Current?.Windows[0]?.Handler?.PlatformView as Microsoft.UI.Xaml.Window;
+            if (nativeWindow?.Content is Microsoft.UI.Xaml.UIElement content)
+            {
+                nativeElement = content;
+                content.KeyDown += OnNativeKeyDown;
+            }
+        }
+        catch { }
+    }
+
+    protected override void OnDisappearing()
+    {
+        base.OnDisappearing();
+        if (timer != null)
+        {
+            timer.Stop();
+            timer = null;
+        }
+        try { if (nativeElement != null) nativeElement.KeyDown -= OnNativeKeyDown; } catch { }
+    }
+
+    void OnNativeKeyDown(object? sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
+    {
+        var key = e.Key;
+        // WASD for left paddle, arrow keys for right paddle
+        if (key == Windows.System.VirtualKey.W)
+        {
+            leftY = Math.Max(0, leftY - 20);
+            UpdateLayoutPositions();
+        }
+        else if (key == Windows.System.VirtualKey.S)
+        {
+            leftY = Math.Min(PlayArea.Height - paddleHeight, leftY + 20);
+            UpdateLayoutPositions();
+        }
+        else if (key == Windows.System.VirtualKey.Up)
+        {
+            rightY = Math.Max(0, rightY - 20);
+            UpdateLayoutPositions();
+        }
+        else if (key == Windows.System.VirtualKey.Down)
+        {
+            rightY = Math.Min(PlayArea.Height - paddleHeight, rightY + 20);
+            UpdateLayoutPositions();
+        }
+    }
+#else
     protected override void OnDisappearing()
     {
         base.OnDisappearing();
@@ -123,4 +212,5 @@ public partial class PongPage : ContentPage
             timer = null;
         }
     }
+#endif
 }

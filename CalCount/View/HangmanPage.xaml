@@ -9,7 +9,7 @@
             <Label x:Name="StatusLabel" FontSize="14" HorizontalOptions="Center" />
 
             <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
-                <Entry x:Name="GuessEntry" WidthRequest="120" Placeholder="Type a letter" />
+                <Entry x:Name="GuessEntry" WidthRequest="220" Placeholder="Type a letter or whole word and press Enter" />
                 <Button Text="Guess" Clicked="OnGuessClicked" />
                 <Button Text="New Word" Clicked="OnNewWordClicked" />
             </HorizontalStackLayout>

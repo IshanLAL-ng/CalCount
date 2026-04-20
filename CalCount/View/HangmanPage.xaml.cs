@@ -29,6 +29,8 @@ public partial class HangmanPage : ContentPage
     public HangmanPage()
     {
         InitializeComponent();
+        // wire Completed in code to avoid XAML event binding issues on some platforms
+        GuessEntry.Completed += OnGuessCompleted;
         StartNewWord();
     }
 
@@ -39,6 +41,7 @@ public partial class HangmanPage : ContentPage
         guessed.Clear();
         wrongGuesses = 0;
         GuessEntry.Text = string.Empty;
+        GuessEntry.Focus();
         UpdateDisplay();
     }
     void UpdateDisplay()
@@ -74,8 +77,36 @@ public partial class HangmanPage : ContentPage
 
     void OnGuessClicked(object sender, EventArgs e)
     {
-        var text = (GuessEntry?.Text ?? string.Empty).Trim().ToUpperInvariant();
+        ProcessGuess(GuessEntry?.Text ?? string.Empty);
+    }
+
+    void OnGuessCompleted(object? sender, EventArgs e)
+    {
+        ProcessGuess(GuessEntry?.Text ?? string.Empty);
+    }
+
+    void ProcessGuess(string raw)
+    {
+        var text = (raw ?? string.Empty).Trim().ToUpperInvariant();
         if (string.IsNullOrEmpty(text)) return;
+
+        // Full-word guess
+        if (text.Length > 1)
+        {
+            if (text == currentWord)
+            {
+                foreach (var c in currentWord) if (char.IsLetter(c)) guessed.Add(c);
+            }
+            else
+            {
+                // penalize one wrong guess for an incorrect full-word guess
+                wrongGuesses++;
+            }
+            GuessEntry.Text = string.Empty;
+            UpdateDisplay();
+            return;
+        }
+
         var ch = text[0];
         if (!char.IsLetter(ch))
         {
@@ -94,6 +125,7 @@ public partial class HangmanPage : ContentPage
         guessed.Add(ch);
         if (!currentWord.Contains(ch)) wrongGuesses++;
         GuessEntry.Text = string.Empty;
+        GuessEntry.Focus();
         UpdateDisplay();
     }
 }

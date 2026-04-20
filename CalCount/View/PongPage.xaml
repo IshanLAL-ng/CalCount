@@ -5,6 +5,17 @@
              Title="Pong">
     <VerticalStackLayout Padding="12" Spacing="8">
         <Label Text="Pong - two players on same device" HorizontalOptions="Center" />
+
+        <HorizontalStackLayout HorizontalOptions="Center" Spacing="20">
+            <Label x:Name="LeftScoreLabel" Text="Left: 0" TextColor="Black" />
+            <HorizontalStackLayout Spacing="6">
+                <Button Text="Easy" Clicked="OnLevelEasy" />
+                <Button Text="Normal" Clicked="OnLevelNormal" />
+                <Button Text="Hard" Clicked="OnLevelHard" />
+            </HorizontalStackLayout>
+            <Label x:Name="RightScoreLabel" Text="Right: 0" TextColor="Black" />
+        </HorizontalStackLayout>
+
         <AbsoluteLayout x:Name="PlayArea" BackgroundColor="Black" HeightRequest="300">
             <BoxView x:Name="LeftPaddle" Color="White" WidthRequest="12" HeightRequest="60" />
             <BoxView x:Name="RightPaddle" Color="White" WidthRequest="12" HeightRequest="60" />
