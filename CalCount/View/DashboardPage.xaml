@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CalCount.View.DashboardPage"
+             Title="Dashboard"
+             BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1E1E1E}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
+            
+            <!-- Date Header -->
+            <Label Text="Daily Summary"
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   TextColor="{AppThemeBinding Light=#333333, Dark=#FFFFFF}"/>
+
+            <!-- Daily Calorie Summary -->
+            <Frame BorderColor="{AppThemeBinding Light=#E0E0E0, Dark=#333333}"
+                   CornerRadius="15"
+                   Padding="15"
+                   HasShadow="True">
+                <VerticalStackLayout Spacing="10">
+                    <HorizontalStackLayout Spacing="10" JustifyContent="SpaceBetween">
+                        <Label Text="Daily Calories" FontSize="16" FontAttributes="Bold"/>
+                        <Label Text="{Binding CalorieProgress, StringFormat='{0:F0}%'}" 
+                               FontSize="16" 
+                               FontAttributes="Bold"
+                               TextColor="#FF9800"/>
+                    </HorizontalStackLayout>
+                    
+                    <ProgressBar Progress="{Binding CalorieProgress, Converter={StaticResource ProgressConverter}}"
+                                 ProgressColor="#FF9800"
+                                 HeightRequest="20"
+                                 CornerRadius="10"/>
+                    
+                    <HorizontalStackLayout Spacing="15" JustifyContent="SpaceEvenly">
+                        <VerticalStackLayout Spacing="5" HorizontalOptions="Center">
+                            <Label Text="{Binding CaloriesConsumed, StringFormat='{0:F0}'}" 
+                                   FontSize="14" 
+                                   FontAttributes="Bold"
+                                   TextColor="#4CAF50"
+                                   HorizontalTextAlignment="Center"/>
+                            <Label Text="Consumed" FontSize="12" TextColor="Gray" HorizontalTextAlignment="Center"/>
+                        </VerticalStackLayout>
+                        
+                        <VerticalStackLayout Spacing="5" HorizontalOptions="Center">
+                            <Label Text="{Binding NetCalories, StringFormat='{0:F0}'}" 
+                                   FontSize="14" 
+                                   FontAttributes="Bold"
+                                   TextColor="#2196F3"
+                                   HorizontalTextAlignment="Center"/>
+                            <Label Text="Remaining" FontSize="12" TextColor="Gray" HorizontalTextAlignment="Center"/>
+                        </VerticalStackLayout>
+                        
+                        <VerticalStackLayout Spacing="5" HorizontalOptions="Center">
+                            <Label Text="{Binding CaloriesBurned, StringFormat='{0:F0}'}" 
+                                   FontSize="14" 
+                                   FontAttributes="Bold"
+                                   TextColor="#E91E63"
+                                   HorizontalTextAlignment="Center"/>
+                            <Label Text="Burned" FontSize="12" TextColor="Gray" HorizontalTextAlignment="Center"/>
+                        </VerticalStackLayout>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Macros Summary -->
+            <Frame BorderColor="{AppThemeBinding Light=#E0E0E0, Dark=#333333}"
+                   CornerRadius="15"
+                   Padding="15"
+                   HasShadow="True">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Macronutrients" FontSize="16" FontAttributes="Bold"/>
+                    
+                    <HorizontalStackLayout Spacing="10" JustifyContent="SpaceEvenly">
+                        <VerticalStackLayout Spacing="5" HorizontalOptions="FillAndExpand">
+                            <Label Text="Protein" FontSize="12" TextColor="Gray"/>
+                            <Label Text="{Binding ProteinConsumed, StringFormat='{0:F1}g'}" 
+                                   FontSize="14" 
+                                   FontAttributes="Bold"/>
+                            <ProgressBar Progress="0.7" ProgressColor="#FF5722"/>
+                        </VerticalStackLayout>
+                        
+                        <VerticalStackLayout Spacing="5" HorizontalOptions="FillAndExpand">
+                            <Label Text="Carbs" FontSize="12" TextColor="Gray"/>
+                            <Label Text="{Binding CarbsConsumed, StringFormat='{0:F1}g'}" 
+                                   FontSize="14" 
+                                   FontAttributes="Bold"/>
+                            <ProgressBar Progress="0.6" ProgressColor="#4CAF50"/>
+                        </VerticalStackLayout>
+                        
+                        <VerticalStackLayout Spacing="5" HorizontalOptions="FillAndExpand">
+                            <Label Text="Fat" FontSize="12" TextColor="Gray"/>
+                            <Label Text="{Binding FatConsumed, StringFormat='{0:F1}g'}" 
+                                   FontSize="14" 
+                                   FontAttributes="Bold"/>
+                            <ProgressBar Progress="0.5" ProgressColor="#2196F3"/>
+                        </VerticalStackLayout>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Activity Summary -->
+            <HorizontalStackLayout Spacing="15" JustifyContent="SpaceEvenly">
+                <Frame BorderColor="{AppThemeBinding Light=#E0E0E0, Dark=#333333}"
+                       CornerRadius="15"
+                       Padding="15"
+                       HasShadow="True"
+                       HorizontalOptions="FillAndExpand">
+                    <VerticalStackLayout Spacing="10">
+                        <Label Text="💧" FontSize="24"/>
+                        <Label Text="{Binding WaterConsumed, StringFormat='{0:F0}ml'}" 
+                               FontSize="16" 
+                               FontAttributes="Bold"/>
+                        <Label Text="Water" FontSize="12" TextColor="Gray"/>
+                    </VerticalStackLayout>
+                </Frame>
+                
+                <Frame BorderColor="{AppThemeBinding Light=#E0E0E0, Dark=#333333}"
+                       CornerRadius="15"
+                       Padding="15"
+                       HasShadow="True"
+                       HorizontalOptions="FillAndExpand">
+                    <VerticalStackLayout Spacing="10">
+                        <Label Text="🏃" FontSize="24"/>
+                        <Label Text="{Binding WorkoutsCompleted}" 
+                               FontSize="16" 
+                               FontAttributes="Bold"/>
+                        <Label Text="Workouts" FontSize="12" TextColor="Gray"/>
+                    </VerticalStackLayout>
+                </Frame>
+            </HorizontalStackLayout>
+
+            <!-- Recent Foods -->
+            <Label Text="Recent Foods" FontSize="16" FontAttributes="Bold"/>
+            
+            <CollectionView ItemsSource="{Binding RecentFoods}" SelectionMode="Single">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame BorderColor="{AppThemeBinding Light=#E0E0E0, Dark=#333333}"
+                               CornerRadius="10"
+                               Padding="12"
+                               Margin="0,5">
+                            <HorizontalStackLayout Spacing="10">
+                                <VerticalStackLayout Spacing="5" HorizontalOptions="FillAndExpand">
+                                    <Label Text="{Binding Name}" FontSize="14" FontAttributes="Bold"/>
+                                    <Label Text="{Binding Nutrition.Calories, StringFormat='Calories: {0:F0}'}" 
+                                           FontSize="12" 
+                                           TextColor="Gray"/>
+                                </VerticalStackLayout>
+                                <Label Text="{Binding LoggedDateTime, StringFormat='{0:HH:mm}'}" 
+                                       FontSize="12" 
+                                       TextColor="Gray"
+                                       VerticalOptions="Center"/>
+                            </HorizontalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

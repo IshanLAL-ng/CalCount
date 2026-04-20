@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CalCount.View.FitnessLoggingPage"
+             Title="Log Fitness"
+             BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1E1E1E}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+
+            <!-- Workout Form -->
+            <Label Text="Log Your Workout" FontSize="18" FontAttributes="Bold"/>
+
+            <VerticalStackLayout Spacing="10">
+                <Label Text="Workout Name" FontSize="12" FontAttributes="Bold"/>
+                <Entry Placeholder="e.g., Morning Jog"
+                       Text="{Binding WorkoutName}"
+                       BackgroundColor="{AppThemeBinding Light=#F5F5F5, Dark=#2A2A2A}"
+                       TextColor="{AppThemeBinding Light=#333333, Dark=#FFFFFF}"/>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Spacing="10">
+                <Label Text="Category" FontSize="12" FontAttributes="Bold"/>
+                <Picker ItemsSource="{Binding Categories}"
+                        SelectedItem="{Binding SelectedCategory}"
+                        BackgroundColor="{AppThemeBinding Light=#F5F5F5, Dark=#2A2A2A}"
+                        TextColor="{AppThemeBinding Light=#333333, Dark=#FFFFFF}"/>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Spacing="10">
+                <Label Text="Duration (minutes): {0}" StringFormat="Duration (minutes): {0}" 
+                       FontSize="12" 
+                       FontAttributes="Bold"/>
+                <Slider Value="{Binding DurationMinutes}" Minimum="1" Maximum="300" Step="5"/>
+                <Label Text="{Binding DurationMinutes, StringFormat='{0:F0} min'}" 
+                       FontSize="14" 
+                       FontAttributes="Bold"
+                       TextColor="#FF9800"/>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Spacing="10">
+                <Label Text="Intensity" FontSize="12" FontAttributes="Bold"/>
+                <Picker ItemsSource="{Binding Intensities}"
+                        SelectedItem="{Binding SelectedIntensity}"
+                        BackgroundColor="{AppThemeBinding Light=#F5F5F5, Dark=#2A2A2A}"
+                        TextColor="{AppThemeBinding Light=#333333, Dark=#FFFFFF}"/>
+            </VerticalStackLayout>
+
+            <!-- Estimated Calories -->
+            <Frame BorderColor="{AppThemeBinding Light=#E0E0E0, Dark=#333333}"
+                   CornerRadius="15"
+                   Padding="15"
+                   HasShadow="True">
+                <HorizontalStackLayout Spacing="20" JustifyContent="SpaceBetween">
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="Estimated Burn" FontSize="12" TextColor="Gray"/>
+                        <Label Text="{Binding EstimatedCalories, StringFormat='{0:F0}'}" 
+                               FontSize="20" 
+                               FontAttributes="Bold"
+                               TextColor="#E91E63"/>
+                    </VerticalStackLayout>
+                    <Label Text="🔥" FontSize="40" VerticalOptions="Center"/>
+                </HorizontalStackLayout>
+            </Frame>
+
+            <VerticalStackLayout Spacing="10">
+                <Label Text="Notes (Optional)" FontSize="12" FontAttributes="Bold"/>
+                <Editor Placeholder="Add notes about your workout..."
+                        Text="{Binding Notes}"
+                        BackgroundColor="{AppThemeBinding Light=#F5F5F5, Dark=#2A2A2A}"
+                        TextColor="{AppThemeBinding Light=#333333, Dark=#FFFFFF}"
+                        HeightRequest="80"/>
+            </VerticalStackLayout>
+
+            <!-- Log Workout Button -->
+            <Button Text="Log Workout"
+                    BackgroundColor="#4CAF50"
+                    TextColor="White"
+                    Padding="15"
+                    CornerRadius="25"
+                    FontSize="14"
+                    FontAttributes="Bold"/>
+
+            <!-- Recent Workouts -->
+            <Label Text="Recent Workouts" FontSize="14" FontAttributes="Bold" Margin="0,20,0,0"/>
+            
+            <CollectionView ItemsSource="{Binding RecentWorkouts}" SelectionMode="Single">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame BorderColor="{AppThemeBinding Light=#E0E0E0, Dark=#333333}"
+                               CornerRadius="10"
+                               Padding="12"
+                               Margin="0,5"
+                               HasShadow="True">
+                            <VerticalStackLayout Spacing="8">
+                                <HorizontalStackLayout JustifyContent="SpaceBetween">
+                                    <Label Text="{Binding Name}" FontSize="14" FontAttributes="Bold"/>
+                                    <Label Text="{Binding WorkoutDateTime, StringFormat='{0:MM/dd HH:mm}'}" 
+                                           FontSize="11" 
+                                           TextColor="Gray"/>
+                                </HorizontalStackLayout>
+                                <HorizontalStackLayout Spacing="15">
+                                    <Label Text="{Binding Category}" FontSize="12" TextColor="Gray"/>
+                                    <Label Text="{Binding DurationMinutes, StringFormat='{0} min'}" 
+                                           FontSize="12" 
+                                           TextColor="Gray"/>
+                                    <Label Text="{Binding CaloriesBurned, StringFormat='{0:F0} cal'}" 
+                                           FontSize="12" 
+                                           TextColor="#E91E63"
+                                           FontAttributes="Bold"/>
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
