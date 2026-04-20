@@ -20,8 +20,12 @@ public partial class LoginPage : ContentPage
 			return;
 		}
 
-		// Example: accept any non-empty credentials
+        // Example: accept any non-empty credentials
 		await DisplayAlert("Login", $"Welcome, {username}!", "OK");
-		Application.Current.Windows[0].Page = new AppShell();
+
+		// Switch to AppShell and navigate to the games landing page
+		Application.Current.MainPage = new AppShell();
+		// Ensure the shell is loaded then navigate to Games page
+		await Shell.Current.GoToAsync("//Games");
 	}
 }
