@@ -22,6 +22,8 @@ public partial class LoginPage : ContentPage
 
         // Example: accept any non-empty credentials
 		await DisplayAlert("Login", $"Welcome, {username}!", "OK");
-		Application.Current.Windows[0].Page = new AppShell();
+
+		// Switch to AppShell and navigate to the games landing page
+		Application.Current.MainPage = new AppShell();
 	}
 }
