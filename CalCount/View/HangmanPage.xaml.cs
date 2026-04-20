@@ -1,12 +1,26 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Maui.Controls;
 
 namespace CalCount.View;
 
 public partial class HangmanPage : ContentPage
 {
-    readonly List<string> words = new() { "apple", "banana", "orange", "computer", "microsoft", "maui", "developer", "keyboard" };
+    // words not related to software/work
+    readonly List<string> words = new()
+    {
+        "elephant",
+        "pineapple",
+        "mountain",
+        "sunflower",
+        "giraffe",
+        "hippopotamus",
+        "strawberry",
+        "kangaroo",
+        "waterfall",
+        "butterfly"
+    };
     string currentWord = string.Empty;
     HashSet<char> guessed = new();
     int wrongGuesses = 0;
@@ -24,37 +38,9 @@ public partial class HangmanPage : ContentPage
         currentWord = words[rnd.Next(words.Count)].ToUpperInvariant();
         guessed.Clear();
         wrongGuesses = 0;
-        BuildLettersGrid();
+        GuessEntry.Text = string.Empty;
         UpdateDisplay();
     }
-
-    void BuildLettersGrid()
-    {
-        LettersGrid.Children.Clear();
-        LettersGrid.RowDefinitions.Clear();
-        LettersGrid.ColumnDefinitions.Clear();
-
-        int cols = 7;
-        for (int c = 0; c < cols; c++) LettersGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
-
-        int rows = 4;
-        for (int r = 0; r < rows; r++) LettersGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
-
-        string letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        int index = 0;
-        for (int r = 0; r < rows; r++)
-        {
-            for (int c = 0; c < cols; c++)
-            {
-                if (index >= letters.Length) break;
-                var ch = letters[index++];
-                var btn = new Button { Text = ch.ToString(), FontSize = 14 };
-                btn.Clicked += OnLetterClicked;
-                LettersGrid.Add(btn, c, r);
-            }
-        }
-    }
-
     void UpdateDisplay()
     {
         var display = new System.Text.StringBuilder();
@@ -70,6 +56,7 @@ public partial class HangmanPage : ContentPage
 
         WordLabel.Text = display.ToString();
         StatusLabel.Text = $"Wrong: {wrongGuesses} / {maxWrong}";
+        GuessedLabel.Text = "Guessed: " + string.Join(", ", guessed.OrderBy(c => c));
 
         if (won)
         {
@@ -80,20 +67,33 @@ public partial class HangmanPage : ContentPage
             DisplayAlert("You lose", $"The word was {currentWord}", "OK");
         }
     }
-
-    void OnLetterClicked(object? sender, EventArgs e)
-    {
-        if (sender is Button b && !string.IsNullOrEmpty(b.Text))
-        {
-            b.IsEnabled = false;
-            var ch = b.Text[0];
-            if (currentWord.Contains(ch)) guessed.Add(ch); else wrongGuesses++;
-            UpdateDisplay();
-        }
-    }
-
     void OnNewWordClicked(object sender, EventArgs e)
     {
         StartNewWord();
+    }
+
+    void OnGuessClicked(object sender, EventArgs e)
+    {
+        var text = (GuessEntry?.Text ?? string.Empty).Trim().ToUpperInvariant();
+        if (string.IsNullOrEmpty(text)) return;
+        var ch = text[0];
+        if (!char.IsLetter(ch))
+        {
+            DisplayAlert("Invalid", "Please type a letter (A-Z).", "OK");
+            GuessEntry.Text = string.Empty;
+            return;
+        }
+
+        if (guessed.Contains(ch))
+        {
+            // already guessed
+            GuessEntry.Text = string.Empty;
+            return;
+        }
+
+        guessed.Add(ch);
+        if (!currentWord.Contains(ch)) wrongGuesses++;
+        GuessEntry.Text = string.Empty;
+        UpdateDisplay();
     }
 }

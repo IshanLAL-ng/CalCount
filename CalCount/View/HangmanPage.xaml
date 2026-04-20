@@ -7,8 +7,14 @@
         <VerticalStackLayout Padding="20" Spacing="12">
             <Label x:Name="WordLabel" FontSize="24" HorizontalOptions="Center" />
             <Label x:Name="StatusLabel" FontSize="14" HorizontalOptions="Center" />
-            <Grid x:Name="LettersGrid" ColumnSpacing="6" RowSpacing="6" />
-            <Button Text="New Word" Clicked="OnNewWordClicked" />
+
+            <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
+                <Entry x:Name="GuessEntry" WidthRequest="120" Placeholder="Type a letter" />
+                <Button Text="Guess" Clicked="OnGuessClicked" />
+                <Button Text="New Word" Clicked="OnNewWordClicked" />
+            </HorizontalStackLayout>
+
+            <Label x:Name="GuessedLabel" FontSize="14" HorizontalOptions="Center" />
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
