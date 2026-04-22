@@ -57,7 +57,7 @@
                                    Margin="0,8"
                                    HasShadow="True">
                                 <VerticalStackLayout Spacing="10">
-                                    <HorizontalStackLayout JustifyContent="SpaceBetween">
+                                    <HorizontalStackLayout HorizontalOptions="FillAndExpand">
                                         <VerticalStackLayout Spacing="5" HorizontalOptions="FillAndExpand">
                                             <Label Text="{Binding Name}" 
                                                    FontSize="15" 
@@ -81,7 +81,7 @@
                                                TextColor="Gray"/>
                                     </HorizontalStackLayout>
 
-                                    <HorizontalStackLayout Spacing="8" JustifyContent="End">
+                                    <HorizontalStackLayout Spacing="8" HorizontalOptions="End">
                                         <Button Text="👁️ View" 
                                                 BackgroundColor="#2196F3" 
                                                 TextColor="White"

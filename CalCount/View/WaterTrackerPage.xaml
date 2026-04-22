@@ -44,7 +44,7 @@
 
             <!-- Quick Add Buttons -->
             <Label Text="Quick Add" FontSize="14" FontAttributes="Bold"/>
-            <HorizontalStackLayout Spacing="10" JustifyContent="SpaceEvenly">
+            <HorizontalStackLayout Spacing="10" HorizontalOptions="FillAndExpand">
                 <Button Text="☕\n250ml"
                         BackgroundColor="#81D4FA"
                         TextColor="#01579B"
@@ -112,7 +112,7 @@
                             <HorizontalStackLayout JustifyContent="SpaceBetween">
                                 <HorizontalStackLayout Spacing="10">
                                     <Label Text="💧" FontSize="20" VerticalOptions="Center"/>
-                                    <VerticalStackLayout Spacing="3" JustifyContent="Center">
+                                    <VerticalStackLayout Spacing="3" VerticalOptions="Center">
                                         <Label Text="{Binding AmountMl, StringFormat='{0:F0}ml'}" 
                                                FontSize="14" 
                                                FontAttributes="Bold"/>

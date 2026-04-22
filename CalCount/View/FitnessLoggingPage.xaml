@@ -28,10 +28,10 @@
             </VerticalStackLayout>
 
             <VerticalStackLayout Spacing="10">
-                <Label Text="Duration (minutes): {0}" StringFormat="Duration (minutes): {0}" 
+                <Label Text="{Binding DurationMinutes, StringFormat='Duration (minutes): {0}'}" 
                        FontSize="12" 
                        FontAttributes="Bold"/>
-                <Slider Value="{Binding DurationMinutes}" Minimum="1" Maximum="300" Step="5"/>
+                <Slider Value="{Binding DurationMinutes}" Minimum="1" Maximum="300" StepValue="5"/>
                 <Label Text="{Binding DurationMinutes, StringFormat='{0:F0} min'}" 
                        FontSize="14" 
                        FontAttributes="Bold"
@@ -51,7 +51,7 @@
                    CornerRadius="15"
                    Padding="15"
                    HasShadow="True">
-                <HorizontalStackLayout Spacing="20" JustifyContent="SpaceBetween">
+                <HorizontalStackLayout Spacing="20" HorizontalOptions="FillAndExpand">
                     <VerticalStackLayout Spacing="5">
                         <Label Text="Estimated Burn" FontSize="12" TextColor="Gray"/>
                         <Label Text="{Binding EstimatedCalories, StringFormat='{0:F0}'}" 
@@ -93,7 +93,7 @@
                                Margin="0,5"
                                HasShadow="True">
                             <VerticalStackLayout Spacing="8">
-                                <HorizontalStackLayout JustifyContent="SpaceBetween">
+                                <HorizontalStackLayout HorizontalOptions="FillAndExpand">
                                     <Label Text="{Binding Name}" FontSize="14" FontAttributes="Bold"/>
                                     <Label Text="{Binding WorkoutDateTime, StringFormat='{0:MM/dd HH:mm}'}" 
                                            FontSize="11" 

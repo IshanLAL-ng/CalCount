@@ -99,11 +99,10 @@
             </Frame>
 
             <!-- Weight Change Estimate -->
-            <Frame BorderColor="{AppThemeBinding Light#E0E0E0, Dark#333333}"
+            <Frame BorderColor="#FF9800"
                    CornerRadius="15"
                    Padding="15"
-                   HasShadow="True"
-                   BorderColor="#FF9800">
+                   HasShadow="True">
                 <VerticalStackLayout Spacing="10">
                     <Label Text="Estimated Weekly Weight Change" FontSize="12" FontAttributes="Bold"/>
                     <HorizontalStackLayout JustifyContent="SpaceBetween">

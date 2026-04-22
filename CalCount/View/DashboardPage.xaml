@@ -20,20 +20,22 @@
                    Padding="15"
                    HasShadow="True">
                 <VerticalStackLayout Spacing="10">
-                    <HorizontalStackLayout Spacing="10" JustifyContent="SpaceBetween">
-                        <Label Text="Daily Calories" FontSize="16" FontAttributes="Bold"/>
+                    <HorizontalStackLayout Spacing="10" HorizontalOptions="FillAndExpand">
+                        <Label Text="Daily Calories" FontSize="16" FontAttributes="Bold" HorizontalOptions="Start"/>
                         <Label Text="{Binding CalorieProgress, StringFormat='{0:F0}%'}" 
                                FontSize="16" 
                                FontAttributes="Bold"
-                               TextColor="#FF9800"/>
+                               TextColor="#FF9800"
+                               HorizontalOptions="End"/>
                     </HorizontalStackLayout>
                     
-                    <ProgressBar Progress="{Binding CalorieProgress, Converter={StaticResource ProgressConverter}}"
-                                 ProgressColor="#FF9800"
-                                 HeightRequest="20"
-                                 CornerRadius="10"/>
+                    <Frame CornerRadius="10" Padding="0" HasShadow="False" BorderColor="Transparent">
+                        <ProgressBar Progress="{Binding CalorieProgress, Converter={StaticResource ProgressConverter}}"
+                                     ProgressColor="#FF9800"
+                                     HeightRequest="20"/>
+                    </Frame>
                     
-                    <HorizontalStackLayout Spacing="15" JustifyContent="SpaceEvenly">
+                    <HorizontalStackLayout Spacing="15" HorizontalOptions="FillAndExpand">
                         <VerticalStackLayout Spacing="5" HorizontalOptions="Center">
                             <Label Text="{Binding CaloriesConsumed, StringFormat='{0:F0}'}" 
                                    FontSize="14" 
@@ -72,7 +74,7 @@
                 <VerticalStackLayout Spacing="10">
                     <Label Text="Macronutrients" FontSize="16" FontAttributes="Bold"/>
                     
-                    <HorizontalStackLayout Spacing="10" JustifyContent="SpaceEvenly">
+                    <HorizontalStackLayout Spacing="10" HorizontalOptions="FillAndExpand">
                         <VerticalStackLayout Spacing="5" HorizontalOptions="FillAndExpand">
                             <Label Text="Protein" FontSize="12" TextColor="Gray"/>
                             <Label Text="{Binding ProteinConsumed, StringFormat='{0:F1}g'}" 
@@ -101,7 +103,7 @@
             </Frame>
 
             <!-- Activity Summary -->
-            <HorizontalStackLayout Spacing="15" JustifyContent="SpaceEvenly">
+            <HorizontalStackLayout Spacing="15" HorizontalOptions="FillAndExpand">
                 <Frame BorderColor="{AppThemeBinding Light=#E0E0E0, Dark=#333333}"
                        CornerRadius="15"
                        Padding="15"
