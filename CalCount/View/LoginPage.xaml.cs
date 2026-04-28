@@ -18,7 +18,7 @@ public partial class LoginPage : ContentPage
             return;
         }
 
-        // Navigate to DashboardPage and set it as main page
-        Application.Current.MainPage = new NavigationPage(new DashboardPage(username));
+        // Navigate to DashboardPage using the existing NavigationPage so back navigation works
+        await Navigation.PushAsync(new DashboardPage(username));
     }
 }
