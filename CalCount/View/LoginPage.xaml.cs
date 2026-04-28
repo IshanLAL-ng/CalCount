@@ -9,21 +9,16 @@ public partial class LoginPage : ContentPage
 
     private async void OnLoginClicked(object? sender, EventArgs e)
     {
-        // Read values from the named Entry controls in XAML
         var username = UsernameEntry?.Text ?? string.Empty;
         var password = PasswordEntry?.Text ?? string.Empty;
 
-        // Simple validation - replace with real auth as needed
         if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
         {
             await DisplayAlert("Login failed", "Please enter both username and password.", "OK");
             return;
         }
 
-
-		// Switch to AppShell and navigate to the games landing page
-		Application.Current.MainPage = new AppShell();
-		// Ensure the shell is loaded then navigate to Games page
-
+        // Navigate to DashboardPage and set it as main page
+        Application.Current.MainPage = new NavigationPage(new DashboardPage(username));
     }
 }
