@@ -11,8 +11,8 @@ namespace CalCount
 
         protected override Window CreateWindow(IActivationState? activationState)
         {
-            // Start the app inside a NavigationPage so pages can push/pop and show the back button
-            return new Window(new NavigationPage(new View.LoginPage()));
+            // Use AppShell as the application's main Shell so Shell.Current is available
+            return new Window(new AppShell());
         }
     }
 }

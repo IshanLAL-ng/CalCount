@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="CalCount.View.LoginPage"
-             Title="Login Page">
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodels="clr-namespace:CalCount.ViewModel"
+    x:Class="CalCount.View.LoginPage"
+    Title="Login Page"
+    x:DataType="viewmodels:LoginViewModel">
+
+    <ContentPage.BindingContext>
+        <viewmodels:LoginViewModel />
+    </ContentPage.BindingContext>
 
     <ScrollView>
         <VerticalStackLayout Padding="24" Spacing="18" VerticalOptions="Center">
@@ -12,12 +19,12 @@
             <Frame Padding="12" HasShadow="True" CornerRadius="8">
                 <VerticalStackLayout Spacing="12">
                     <Label Text="Username" />
-                    <Entry x:Name="UsernameEntry" Placeholder="Enter username" />
+                    <Entry Text="{Binding Username}" Placeholder="Enter username" />
 
                     <Label Text="Password" />
-                    <Entry x:Name="PasswordEntry" Placeholder="Enter password" IsPassword="True" />
+                    <Entry Text="{Binding Password}" Placeholder="Enter password" IsPassword="True" />
 
-                    <Button Text="Log in" Clicked="OnLoginClicked" />
+                    <Button Text="Log in" Command="{Binding LoginCommand}" />
                 </VerticalStackLayout>
             </Frame>
 
@@ -25,4 +32,3 @@
     </ScrollView>
 
 </ContentPage>
-    

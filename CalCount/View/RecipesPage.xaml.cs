@@ -5,6 +5,7 @@ public partial class RecipesPage : ContentPage
     public RecipesPage()
     {
         InitializeComponent();
+        BindingContext = new ViewModel.RecipesViewModel();
     }
 
     private async void OnSavoryClicked(object? sender, EventArgs e)

@@ -1,11 +1,14 @@
+using Microsoft.Maui.Controls;
+
 namespace CalCount.View;
 
+[QueryProperty(nameof(Username), "username")]
 public partial class DashboardPage : ContentPage
 {
-    public DashboardPage(string username)
+    public DashboardPage()
     {
         InitializeComponent();
-        WelcomeLabel.Text = $"Welcome, {username}!";
+
         // Add a Recipes button programmatically in case editing the XAML is problematic
         if (this.Content is ScrollView sv && sv.Content is VerticalStackLayout vsl)
         {
@@ -20,10 +23,26 @@ public partial class DashboardPage : ContentPage
         }
     }
 
+    private string username = string.Empty;
+
+    public string Username
+    {
+        get => username;
+        set
+        {
+            username = value;
+            // Update UI when query property is set
+            if (!string.IsNullOrEmpty(username) && WelcomeLabel != null)
+            {
+                WelcomeLabel.Text = $"Welcome, {username}!";
+            }
+        }
+    }
+
     private async void OnRecipesClicked(object? sender, EventArgs e)
     {
-        // Navigate to the recipes page
-        await Navigation.PushAsync(new RecipesPage());
+        // Use Shell navigation so routes are resolved consistently
+        await Shell.Current.GoToAsync("recipes");
     }
 }
 
