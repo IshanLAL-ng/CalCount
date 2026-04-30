@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CalCount.View.SweetListPage"
+             Title="Sweet Recipes">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="12">
+            <Label Text="Sweet Recipes" FontSize="24" HorizontalOptions="Center" />
+
+            <!-- Static list of sweet recipe buttons -->
+            <VerticalStackLayout Spacing="8">
+                <Button Text="Chocolate Cake" Clicked="OnRecipeClicked" />
+                <Button Text="Apple Pie" Clicked="OnRecipeClicked" />
+                <Button Text="Pancakes" Clicked="OnRecipeClicked" />
+            </VerticalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

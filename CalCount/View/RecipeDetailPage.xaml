@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CalCount.View.RecipeDetailPage"
+             Title="Recipe Detail">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="12">
+
+            <!-- Read-only title -->
+            <Label x:Name="TitleLabel" FontSize="20" FontAttributes="Bold" />
+
+            <!-- Static image placeholder (hard-coded) -->
+            <Frame HasShadow="True" CornerRadius="8" Padding="8" HorizontalOptions="Center">
+                <Image x:Name="RecipeImage" WidthRequest="300" HeightRequest="200" Aspect="AspectFill" />
+            </Frame>
+
+            <Label Text="Ingredients" FontAttributes="Bold" />
+            <Label x:Name="IngredientsLabel" LineBreakMode="WordWrap" />
+
+            <Label Text="Instructions" FontAttributes="Bold" />
+            <Label x:Name="InstructionsLabel" LineBreakMode="WordWrap" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

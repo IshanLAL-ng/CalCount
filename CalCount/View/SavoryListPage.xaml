@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CalCount.View.SavoryListPage"
+             Title="Savory Recipes">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="12">
+            <Label Text="Savory Recipes" FontSize="24" HorizontalOptions="Center" />
+
+            <!-- Static list of savory recipe buttons -->
+            <VerticalStackLayout Spacing="8">
+                <Button Text="Grilled Chicken" Clicked="OnRecipeClicked" />
+                <Button Text="Beef Stew" Clicked="OnRecipeClicked" />
+                <Button Text="Vegetable Stir Fry" Clicked="OnRecipeClicked" />
+            </VerticalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
