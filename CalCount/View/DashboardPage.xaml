@@ -5,9 +5,19 @@
              Title="Dashboard">
 
     <ScrollView>
-        <VerticalStackLayout Padding="24" Spacing="18" VerticalOptions="Center">
+        <VerticalStackLayout Padding="24" Spacing="18" VerticalOptions="Start">
             <Label Text="Dashboard" FontSize="24" HorizontalOptions="Center" />
             <Label x:Name="WelcomeLabel" Text="Welcome!" HorizontalOptions="Center" />
+
+            <Label Text="Calories by Meal" FontAttributes="Bold" />
+            <GraphicsView x:Name="MealBarChart" HeightRequest="140" />
+
+            <Label Text="Daily Calories (Last 7 days)" FontAttributes="Bold" />
+            <GraphicsView x:Name="HistoryBarChart" HeightRequest="140" />
+
+            <Label Text="Macro Breakdown" FontAttributes="Bold" />
+            <GraphicsView x:Name="MacroPieChart" HeightRequest="140" WidthRequest="140" HorizontalOptions="Center" />
+
         </VerticalStackLayout>
     </ScrollView>
 
