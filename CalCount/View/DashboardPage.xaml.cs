@@ -1,13 +1,3 @@
-<<<<<<< HEAD
-using Microsoft.Maui.Controls;
-=======
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Graphics;
->>>>>>> 8ff1fd2d920fdec6f8f3486dac7978cd440a2c5f
-
 namespace CalCount.View;
 
 [QueryProperty(nameof(Username), "username")]
@@ -44,35 +34,6 @@ public partial class DashboardPage : ContentPage
             mealView.Drawable = new SmallBarDrawable(mealData);
             mealView.Invalidate();
         }
-
-        if (historyView != null)
-        {
-            historyView.Drawable = new SmallBarDrawable(historyData);
-            historyView.Invalidate();
-        }
-
-        if (macroView != null)
-        {
-            macroView.Drawable = new SmallPieDrawable(macroData);
-            macroView.Invalidate();
-        }
-    }
-
-    private string username = string.Empty;
-
-    public string Username
-    {
-        get => username;
-        set
-        {
-            username = value;
-            // Update UI when query property is set
-            if (!string.IsNullOrEmpty(username) && WelcomeLabel != null)
-            {
-                WelcomeLabel.Text = $"Welcome, {username}!";
-            }
-        }
-    }
 
     private async void OnRecipesClicked(object? sender, EventArgs e)
     {
