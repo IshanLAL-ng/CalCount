@@ -119,25 +119,44 @@ class SmallBarDrawable : IDrawable
         canvas.FillColor = Colors.Transparent;
         canvas.FillRectangle(r);
         if (_values == null || _values.Count == 0) return;
-        // reserve space for title and labels so text doesn't get clipped
-        float topPad = string.IsNullOrEmpty(_title) ? 6f : 22f;
-        float bottomPad = (_labels != null && _labels.Count > 0) ? 20f : 6f;
+        // reserve space for title, y-axis labels and bar labels so text doesn't get clipped
+        float leftPad = 38f; // space for Y-axis labels
+        float rightPad = 12f;
+        float topPad = string.IsNullOrEmpty(_title) ? 8f : 28f;
+        float bottomPad = (_labels != null && _labels.Count > 0) ? 40f : 14f;
 
         // draw baseline axis so empty charts still show structure
         canvas.StrokeColor = Colors.LightGray;
         canvas.StrokeSize = 1f;
-        canvas.DrawLine(r.Left + 2f, r.Bottom - bottomPad - 2f, r.Right - 2f, r.Bottom - bottomPad - 2f);
+        canvas.DrawLine(r.Left + leftPad + 2f, r.Bottom - bottomPad - 2f, r.Right - rightPad - 2f, r.Bottom - bottomPad - 2f);
+
         float max = _values.Max();
-        float gap = 6f;
-        float w = Math.Max(6f, (r.Width - gap * (_values.Count + 1)) / _values.Count);
+        float usableWidth = Math.Max(10f, r.Width - leftPad - rightPad);
+        float gap = Math.Max(6f, usableWidth * 0.06f);
+        float w = Math.Max(8f, (usableWidth - gap * (_values.Count + 1)) / _values.Count);
         var cols = new[] { Colors.SteelBlue, Colors.Coral, Colors.MediumSeaGreen };
         for (int i = 0; i < _values.Count; i++)
         {
             float usableHeight = Math.Max(4f, r.Height - topPad - bottomPad - 8f);
             float h = max > 0 ? (_values[i] / max) * usableHeight : 0f;
-            float x = r.Left + gap + i * (w + gap);
+            float x = r.Left + leftPad + gap + i * (w + gap);
             canvas.FillColor = cols[i % cols.Length];
             canvas.FillRectangle(x, r.Bottom - bottomPad - h, w, h);
+        }
+
+        // Draw numeric values above each bar
+        canvas.FontSize = 10f;
+        canvas.FontColor = Colors.Black;
+        for (int i = 0; i < _values.Count; i++)
+        {
+            float usableHeight = Math.Max(4f, r.Height - topPad - bottomPad - 8f);
+            float h = max > 0 ? (_values[i] / max) * usableHeight : 0f;
+            float x = r.Left + leftPad + gap + i * (w + gap);
+            var txtVal = Math.Round(_values[i]).ToString();
+            float txtY = r.Bottom - bottomPad - h - 10f;
+            // ensure text doesn't overlap title area
+            txtY = Math.Max(txtY, r.Top + topPad + 4f);
+            canvas.DrawString(txtVal, x + w / 2f, txtY, HorizontalAlignment.Center);
         }
 
         // Draw labels under each bar if provided
@@ -147,11 +166,24 @@ class SmallBarDrawable : IDrawable
             canvas.FontSize = 10f;
             for (int i = 0; i < Math.Min(_labels.Count, _values.Count); i++)
             {
-                float x = r.Left + gap + i * (w + gap);
+                float x = r.Left + leftPad + gap + i * (w + gap);
                 var txt = _labels[i];
                 // center text within the reserved bottom padding
-                canvas.DrawString(txt, x + w / 2f, r.Bottom - bottomPad + 4f, HorizontalAlignment.Center);
+                canvas.DrawString(txt, x + w / 2f, r.Bottom - bottomPad + 6f, HorizontalAlignment.Center);
             }
+        }
+
+        // Draw simple Y-axis labels (max and mid) so numbers are easier to read
+        if (max > 0)
+        {
+            canvas.FontSize = 10f;
+            canvas.FontColor = Colors.Gray;
+            // top (max)
+            canvas.DrawString(Math.Round(max).ToString(), r.Left + 6f, r.Top + topPad - 6f, HorizontalAlignment.Left);
+            // mid (~half)
+            canvas.DrawString(Math.Round(max / 2f).ToString(), r.Left + 6f, r.Center.Y, HorizontalAlignment.Left);
+            // zero at baseline
+            canvas.DrawString("0", r.Left + 6f, r.Bottom - bottomPad - 4f, HorizontalAlignment.Left);
         }
 
         // Draw title at top if provided
@@ -195,15 +227,18 @@ class SmallPieDrawable : IDrawable
         // Draw labels to the right of pie
         if (_labels != null)
         {
-            float lx = r.Right - 80f;
+            float lx = r.Right - 140f;
             float ly = r.Top + 8f;
             canvas.FontSize = 12f;
             for (int i = 0; i < Math.Min(_labels.Count, _values.Count); i++)
             {
                 canvas.FillColor = cols[i % cols.Length];
-                canvas.FillRectangle(lx, ly + i * 18, 12, 12);
+                canvas.FillRectangle(lx, ly + i * 22, 12, 12);
                 canvas.FontColor = Colors.Gray;
-                canvas.DrawString(_labels[i] + " (" + Math.Round((_values[i] / total) * 100) + "%)", lx + 18, ly + i * 18, HorizontalAlignment.Left);
+                // include numeric calorie values and percentage
+                var percent = Math.Round((_values[i] / total) * 100);
+                var val = Math.Round(_values[i]);
+                canvas.DrawString(_labels[i] + " - " + val + " cal (" + percent + "%)", lx + 18, ly + i * 22, HorizontalAlignment.Left);
             }
         }
     }
