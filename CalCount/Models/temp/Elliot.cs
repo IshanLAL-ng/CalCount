@@ -1,4 +1,4 @@
-﻿using Java.Security.Spec;
+﻿// removed platform-specific reference
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
