@@ -7,7 +7,26 @@
     <ScrollView>
         <VerticalStackLayout Padding="24" Spacing="12">
             <Label Text="Settings" FontSize="24" HorizontalOptions="Center" />
-            <Label Text="(Placeholder page)" HorizontalOptions="Center" />
+
+            <Label Text="Height (in)" />
+            <Entry x:Name="HeightEntry" Placeholder="e.g. 69" Keyboard="Numeric" />
+
+            <Label Text="Weight (lb)" />
+            <Entry x:Name="WeightEntry" Placeholder="e.g. 150" Keyboard="Numeric" />
+
+            <Label Text="Age" />
+            <Entry x:Name="AgeEntry" Placeholder="e.g. 30" Keyboard="Numeric" />
+
+            <Label Text="Gender" />
+            <HorizontalStackLayout Spacing="12" VerticalOptions="Center">
+                <Switch x:Name="GenderSwitch" Toggled="OnGenderToggled" />
+                <Label x:Name="GenderLabel" VerticalTextAlignment="Center" Text="Female" />
+            </HorizontalStackLayout>
+
+            <Label Text="Weekly weight change (lbs/week)" />
+            <Entry x:Name="WeeklyChangeEntry" Placeholder="-5 to 5" Keyboard="Numeric" />
+
+            <Button Text="Save" Clicked="OnSaveClicked" HorizontalOptions="Center" />
         </VerticalStackLayout>
     </ScrollView>
 
