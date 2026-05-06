@@ -9,12 +9,23 @@
             <Label Text="Add Food / Drink" FontSize="24" HorizontalOptions="Center" />
 
             <Label Text="Name" />
-            <Entry Placeholder="e.g., Banana" />
+            <Entry x:Name="NameEntry" Placeholder="e.g., Banana" />
 
             <Label Text="Calories" />
-            <Entry Placeholder="e.g., 100" Keyboard="Numeric" />
+            <Entry x:Name="CaloriesEntry" Placeholder="e.g., 100" Keyboard="Numeric" />
 
-            <Button Text="Save" HorizontalOptions="Center" />
+            <Label Text="Meal" />
+            <Picker x:Name="MealPicker">
+                <Picker.Items>
+                    <x:String>Breakfast</x:String>
+                    <x:String>Lunch</x:String>
+                    <x:String>Dinner</x:String>
+                    <x:String>Snack</x:String>
+                    <x:String>Other</x:String>
+                </Picker.Items>
+            </Picker>
+
+            <Button Text="Save" Clicked="OnSaveClicked" HorizontalOptions="Center" />
         </VerticalStackLayout>
     </ScrollView>
 

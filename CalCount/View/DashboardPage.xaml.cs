@@ -17,30 +17,57 @@ public partial class DashboardPage : ContentPage
 
         // No programmatic button needed; top buttons are declared in XAML
 
-        // small sample data for the charts
-        var mealData = new List<float> { 600f, 450f, 300f };
-        var historyData = new List<float> { 1800f, 2000f, 1750f, 1900f, 2100f, 1600f, 1850f };
-        var macroData = new List<float> { 40f, 30f, 30f };
+        // Charts are updated in OnAppearing to reflect current data
+        // No MessagingCenter available; charts refresh on OnAppearing
+    }
 
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        UpdateCharts();
+    }
+
+    private void UpdateCharts()
+    {
         var mealView = this.FindByName("MealBarChart") as GraphicsView;
         var historyView = this.FindByName("HistoryBarChart") as GraphicsView;
         var macroView = this.FindByName("MacroPieChart") as GraphicsView;
 
+        // Load entries from App and aggregate
+        var app = Application.Current as App;
+        var today = DateTime.Now.Date;
+        var entries = app?.CalorieEntries.Where(e => e.Date == today).ToList() ?? new List<Models.CalorieEntry>();
+
+        // Aggregate by meal for the meal chart (include Snack/Other so entries aren't missed)
+        var meals = new[] { "Breakfast", "Lunch", "Dinner", "Snack", "Other" };
+        var mealTotals = meals.Select(m => (float)entries.Where(e => e.Meal == m).Sum(e => e.Calories)).ToList();
+
+        // Daily history - last 7 days total calories
+        var historyTotals = Enumerable.Range(0, 7).Select(i =>
+        {
+            var d = today.AddDays(-i);
+            return (float)(app?.CalorieEntries.Where(e => e.Date == d).Sum(en => en.Calories) ?? 0);
+        }).Reverse().ToList();
+
+        // Macro breakdown - placeholder values calculated from today's totals (split by fixed ratios)
+        var totalToday = entries.Sum(e => e.Calories);
+        var macroTotals = new List<float> { (float)(totalToday * 0.4), (float)(totalToday * 0.35), (float)(totalToday * 0.25) };
+
         if (mealView != null)
         {
-            mealView.Drawable = new SmallBarDrawable(mealData);
+            mealView.Drawable = new SmallBarDrawable(mealTotals);
             mealView.Invalidate();
         }
 
         if (historyView != null)
         {
-            historyView.Drawable = new SmallBarDrawable(historyData);
+            historyView.Drawable = new SmallBarDrawable(historyTotals);
             historyView.Invalidate();
         }
 
         if (macroView != null)
         {
-            macroView.Drawable = new SmallPieDrawable(macroData);
+            macroView.Drawable = new SmallPieDrawable(macroTotals);
             macroView.Invalidate();
         }
     }
@@ -85,6 +112,10 @@ class SmallBarDrawable : IDrawable
         canvas.FillColor = Colors.Transparent;
         canvas.FillRectangle(r);
         if (_values == null || _values.Count == 0) return;
+        // draw baseline axis so empty charts still show structure
+        canvas.StrokeColor = Colors.LightGray;
+        canvas.StrokeSize = 1f;
+        canvas.DrawLine(r.Left + 2f, r.Bottom - 2f, r.Right - 2f, r.Bottom - 2f);
         float max = _values.Max();
         float gap = 6f;
         float w = Math.Max(6f, (r.Width - gap * (_values.Count + 1)) / _values.Count);
