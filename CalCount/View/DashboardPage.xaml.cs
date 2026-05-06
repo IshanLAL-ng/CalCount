@@ -55,13 +55,15 @@ public partial class DashboardPage : ContentPage
 
         if (mealView != null)
         {
-            mealView.Drawable = new SmallBarDrawable(mealTotals, mealLabels, "Calories by Meal");
+            // Title is shown above the view in XAML; avoid drawing it inside the chart to prevent duplication
+            mealView.Drawable = new SmallBarDrawable(mealTotals, mealLabels);
             mealView.Invalidate();
         }
 
         if (historyView != null)
         {
-            historyView.Drawable = new SmallBarDrawable(historyTotals, historyLabels, "Daily Calories");
+            // Title is shown above the view in XAML; avoid drawing it inside the chart to prevent duplication
+            historyView.Drawable = new SmallBarDrawable(historyTotals, historyLabels);
             historyView.Invalidate();
         }
 
@@ -120,20 +122,20 @@ class SmallBarDrawable : IDrawable
         canvas.FillRectangle(r);
         if (_values == null || _values.Count == 0) return;
         // reserve space for title, y-axis labels and bar labels so text doesn't get clipped
-        float leftPad = 38f; // space for Y-axis labels
-        float rightPad = 12f;
-        float topPad = string.IsNullOrEmpty(_title) ? 8f : 28f;
-        float bottomPad = (_labels != null && _labels.Count > 0) ? 40f : 14f;
+        float leftPad = 56f; // more space for Y-axis labels and left margin
+        float rightPad = 24f;
+        float topPad = string.IsNullOrEmpty(_title) ? 12f : 36f;
+        float bottomPad = (_labels != null && _labels.Count > 0) ? 60f : 18f;
 
         // draw baseline axis so empty charts still show structure
         canvas.StrokeColor = Colors.LightGray;
         canvas.StrokeSize = 1f;
-        canvas.DrawLine(r.Left + leftPad + 2f, r.Bottom - bottomPad - 2f, r.Right - rightPad - 2f, r.Bottom - bottomPad - 2f);
+        canvas.DrawLine(r.Left + leftPad + 4f, r.Bottom - bottomPad - 2f, r.Right - rightPad - 4f, r.Bottom - bottomPad - 2f);
 
         float max = _values.Max();
         float usableWidth = Math.Max(10f, r.Width - leftPad - rightPad);
         float gap = Math.Max(6f, usableWidth * 0.06f);
-        float w = Math.Max(8f, (usableWidth - gap * (_values.Count + 1)) / _values.Count);
+        float w = Math.Max(10f, (usableWidth - gap * (_values.Count + 1)) / _values.Count);
         var cols = new[] { Colors.SteelBlue, Colors.Coral, Colors.MediumSeaGreen };
         for (int i = 0; i < _values.Count; i++)
         {
@@ -153,9 +155,9 @@ class SmallBarDrawable : IDrawable
             float h = max > 0 ? (_values[i] / max) * usableHeight : 0f;
             float x = r.Left + leftPad + gap + i * (w + gap);
             var txtVal = Math.Round(_values[i]).ToString();
-            float txtY = r.Bottom - bottomPad - h - 10f;
+            float txtY = r.Bottom - bottomPad - h - 14f;
             // ensure text doesn't overlap title area
-            txtY = Math.Max(txtY, r.Top + topPad + 4f);
+            txtY = Math.Max(txtY, r.Top + 8f);
             canvas.DrawString(txtVal, x + w / 2f, txtY, HorizontalAlignment.Center);
         }
 
@@ -169,7 +171,7 @@ class SmallBarDrawable : IDrawable
                 float x = r.Left + leftPad + gap + i * (w + gap);
                 var txt = _labels[i];
                 // center text within the reserved bottom padding
-                canvas.DrawString(txt, x + w / 2f, r.Bottom - bottomPad + 6f, HorizontalAlignment.Center);
+                canvas.DrawString(txt, x + w / 2f, r.Bottom - bottomPad + 10f, HorizontalAlignment.Center);
             }
         }
 
@@ -179,20 +181,22 @@ class SmallBarDrawable : IDrawable
             canvas.FontSize = 10f;
             canvas.FontColor = Colors.Gray;
             // top (max)
-            canvas.DrawString(Math.Round(max).ToString(), r.Left + 6f, r.Top + topPad - 6f, HorizontalAlignment.Left);
+            canvas.DrawString(Math.Round(max).ToString(), r.Left + 8f, r.Top + 4f, HorizontalAlignment.Left);
             // mid (~half)
-            canvas.DrawString(Math.Round(max / 2f).ToString(), r.Left + 6f, r.Center.Y, HorizontalAlignment.Left);
+            canvas.DrawString(Math.Round(max / 2f).ToString(), r.Left + 8f, r.Center.Y - 6f, HorizontalAlignment.Left);
             // zero at baseline
-            canvas.DrawString("0", r.Left + 6f, r.Bottom - bottomPad - 4f, HorizontalAlignment.Left);
+            canvas.DrawString("0", r.Left + 8f, r.Bottom - bottomPad - 6f, HorizontalAlignment.Left);
         }
 
-        // Draw title at top if provided
+        // Draw title at top if provided, centered over the usable chart area
         if (!string.IsNullOrEmpty(_title))
         {
             canvas.FontColor = Colors.Gray;
             canvas.FontSize = 12f;
-            // draw title in the reserved top padding
-            canvas.DrawString(_title, r.Center.X, r.Top + 6f, HorizontalAlignment.Center);
+            // center title over the usable area (account for left/right padding)
+            float usableWidthForTitle = Math.Max(10f, r.Width - leftPad - rightPad);
+            float titleX = r.Left + leftPad + (usableWidthForTitle / 2f);
+            canvas.DrawString(_title, titleX, r.Top + (topPad / 2f) - 4f, HorizontalAlignment.Center);
         }
     }
 }

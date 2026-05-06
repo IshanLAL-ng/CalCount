@@ -38,13 +38,13 @@
             <Label x:Name="WelcomeLabel" Text="Welcome!" HorizontalOptions="Center" />
 
             <Label Text="Calories by Meal" FontAttributes="Bold" />
-            <GraphicsView x:Name="MealBarChart" HeightRequest="180" HorizontalOptions="Fill" />
+            <GraphicsView x:Name="MealBarChart" HeightRequest="240" HorizontalOptions="Fill" Margin="0,0,0,6" />
 
             <Label Text="Daily Calories (Last 7 days)" FontAttributes="Bold" />
-            <GraphicsView x:Name="HistoryBarChart" HeightRequest="180" HorizontalOptions="Fill" />
+            <GraphicsView x:Name="HistoryBarChart" HeightRequest="240" HorizontalOptions="Fill" Margin="0,0,0,6" />
 
             <Label Text="Macro Breakdown" FontAttributes="Bold" />
-            <GraphicsView x:Name="MacroPieChart" HeightRequest="200" HorizontalOptions="Fill" />
+            <GraphicsView x:Name="MacroPieChart" HeightRequest="240" HorizontalOptions="Fill" Margin="0,0,0,6" />
 
         </VerticalStackLayout>
     </ScrollView>
