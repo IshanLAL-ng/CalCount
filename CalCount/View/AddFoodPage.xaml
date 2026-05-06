@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CalCount.View.AddFoodPage"
+             Title="Add Food/Drink">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="12">
+            <Label Text="Add Food / Drink" FontSize="24" HorizontalOptions="Center" />
+
+            <Label Text="Name" />
+            <Entry Placeholder="e.g., Banana" />
+
+            <Label Text="Calories" />
+            <Entry Placeholder="e.g., 100" Keyboard="Numeric" />
+
+            <Button Text="Save" HorizontalOptions="Center" />
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

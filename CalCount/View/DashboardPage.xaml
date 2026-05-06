@@ -6,6 +6,34 @@
 
     <ScrollView>
         <VerticalStackLayout Padding="24" Spacing="18" VerticalOptions="Start">
+
+            <!-- Top action buttons: Recipes, Add Food/Drinks, Settings -->
+            <HorizontalStackLayout Spacing="12" HorizontalOptions="Fill" VerticalOptions="Start">
+                <Button Text="Recipes"
+                        Clicked="OnRecipesClicked"
+                        BackgroundColor="#ECEFF1"
+                        TextColor="#333333"
+                        CornerRadius="8"
+                        Padding="12,8"
+                        HorizontalOptions="StartAndExpand" />
+
+                <Button Text="Add Food/Drinks"
+                        Clicked="OnAddFoodClicked"
+                        BackgroundColor="#ECEFF1"
+                        TextColor="#333333"
+                        CornerRadius="8"
+                        Padding="12,8"
+                        HorizontalOptions="CenterAndExpand" />
+
+                <Button Text="Settings"
+                        Clicked="OnSettingsClicked"
+                        BackgroundColor="#ECEFF1"
+                        TextColor="#333333"
+                        CornerRadius="8"
+                        Padding="12,8"
+                        HorizontalOptions="EndAndExpand" />
+            </HorizontalStackLayout>
+
             <Label Text="Dashboard" FontSize="24" HorizontalOptions="Center" />
             <Label x:Name="WelcomeLabel" Text="Welcome!" HorizontalOptions="Center" />
 

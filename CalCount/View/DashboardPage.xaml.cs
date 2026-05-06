@@ -15,18 +15,7 @@ public partial class DashboardPage : ContentPage
     {
         InitializeComponent();
 
-        // Add a Recipes button programmatically in case editing the XAML is problematic
-        if (this.Content is ScrollView sv && sv.Content is VerticalStackLayout vsl)
-        {
-            var recipesBtn = new Button
-            {
-                Text = "Recipes",
-                HorizontalOptions = LayoutOptions.Center
-            };
-
-            recipesBtn.Clicked += OnRecipesClicked;
-            vsl.Children.Add(recipesBtn);
-        }
+        // No programmatic button needed; top buttons are declared in XAML
 
         // small sample data for the charts
         var mealData = new List<float> { 600f, 450f, 300f };
@@ -73,6 +62,16 @@ public partial class DashboardPage : ContentPage
     {
         // Use Shell navigation so routes are resolved consistently
         await Shell.Current.GoToAsync("recipes");
+    }
+
+    private async void OnAddFoodClicked(object? sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("addfood");
+    }
+
+    private async void OnSettingsClicked(object? sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("settings");
     }
 }
 

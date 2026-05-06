@@ -13,6 +13,9 @@
             Routing.RegisterRoute("recipes", typeof(View.RecipesPage));
             Routing.RegisterRoute("dashboard", typeof(View.DashboardPage));
             Routing.RegisterRoute("login", typeof(View.LoginPage));
+            // Register new routes for settings and add-food pages
+            Routing.RegisterRoute("settings", typeof(View.SettingsPage));
+            Routing.RegisterRoute("addfood", typeof(View.AddFoodPage));
         }
     }
 }
