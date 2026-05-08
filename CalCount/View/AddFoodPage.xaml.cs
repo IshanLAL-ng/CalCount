@@ -12,7 +12,7 @@ public partial class AddFoodPage : ContentPage
         var name = NameEntry?.Text ?? string.Empty;
         var caloriesText = CaloriesEntry?.Text ?? "0";
         int.TryParse(caloriesText, out var calories);
-        var meal = MealPicker?.SelectedItem as string ?? "Other";
+        var meal = MealPicker?.SelectedItem as string ?? "Breakfast";
 
         var entry = new Models.CalorieEntry
         {
@@ -34,6 +34,6 @@ public partial class AddFoodPage : ContentPage
         base.OnAppearing();
         // select default meal if none chosen
         if (MealPicker?.SelectedIndex == -1)
-            MealPicker.SelectedIndex = 4; // Other
+            MealPicker.SelectedIndex = 0; // Breakfast
     }
 }

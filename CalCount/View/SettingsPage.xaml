@@ -26,6 +26,22 @@
             <Label Text="Weekly weight change (lbs/week)" />
             <Entry x:Name="WeeklyChangeEntry" Placeholder="-5 to 5" Keyboard="Numeric" />
 
+            <Label Text="Activity Level" />
+            <Picker x:Name="ActivityPicker">
+                <Picker.Items>
+                    <x:String>Sedentary</x:String>
+                    <x:String>Lightly active (Walking)</x:String>
+                    <x:String>Moderately active (Daily Workout)</x:String>
+                    <x:String>Very active (Heavy Training)</x:String>
+                </Picker.Items>
+            </Picker>
+
+            <Label Text="Day" />
+            <HorizontalStackLayout Spacing="12" VerticalOptions="Center">
+                <Picker x:Name="DayPicker" WidthRequest="220" />
+                <Button Text="Clear Day" x:Name="ClearDayBtn" Clicked="OnClearDayClicked" BackgroundColor="#FFCDD2" TextColor="#660000" />
+            </HorizontalStackLayout>
+
             <Button Text="Save" Clicked="OnSaveClicked" HorizontalOptions="Center" />
         </VerticalStackLayout>
     </ScrollView>

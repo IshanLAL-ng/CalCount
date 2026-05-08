@@ -21,7 +21,6 @@
                     <x:String>Lunch</x:String>
                     <x:String>Dinner</x:String>
                     <x:String>Snack</x:String>
-                    <x:String>Other</x:String>
                 </Picker.Items>
             </Picker>
 

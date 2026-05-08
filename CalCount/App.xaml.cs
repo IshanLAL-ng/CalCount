@@ -13,6 +13,11 @@ namespace CalCount
             _entries.Add(entry);
         }
 
+        public void RemoveEntriesForDate(DateTime date)
+        {
+            _entries.RemoveAll(e => e.Date.Date == date.Date);
+        }
+
         public App()
         {
             InitializeComponent();

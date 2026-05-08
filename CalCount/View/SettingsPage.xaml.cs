@@ -1,21 +1,32 @@
 using System;
 using System.Globalization;
+using System.Linq;
 using Microsoft.Maui.Storage;
 
 namespace CalCount.View;
 
 public partial class SettingsPage : ContentPage
 {
+    List<DateTime> _pickerDates = new List<DateTime>();
     const string PrefHeight = "Height";
     const string PrefWeight = "Weight";
     const string PrefAge = "Age";
     const string PrefGenderIsMale = "GenderIsMale";
     const string PrefWeeklyChange = "WeeklyChange";
+    const string PrefSelectedDate = "SelectedDate";
+    const string PrefActivityLevel = "ActivityLevel";
 
     public SettingsPage()
     {
         InitializeComponent();
 
+        LoadSettings();
+    }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        // ensure the day picker is populated when the page appears
         LoadSettings();
     }
 
@@ -44,6 +55,46 @@ public partial class SettingsPage : ContentPage
                 if (genderLabel != null)
                     genderLabel.Text = genderSwitch.IsToggled ? "Male" : "Female";
             }
+
+            // Populate DayPicker with last 7 days and select saved date
+            var picker = this.FindByName<Picker>("DayPicker");
+            var activity = this.FindByName<Picker>("ActivityPicker");
+            // populate activity picker selection if present
+            if (activity != null)
+            {
+                var savedAct = Preferences.Get(PrefActivityLevel, string.Empty);
+                if (!string.IsNullOrEmpty(savedAct))
+                {
+                    var idx = activity.Items.IndexOf(savedAct);
+                    if (idx >= 0)
+                        activity.SelectedIndex = idx;
+                }
+            }
+            _pickerDates.Clear();
+            if (picker != null)
+            {
+                picker.Items.Clear();
+                var today = DateTime.Now.Date;
+                var dates = Enumerable.Range(0, 7).Select(i => today.AddDays(-6 + i)).ToList();
+                foreach (var d in dates)
+                {
+                    picker.Items.Add(d.DayOfWeek.ToString());
+                    _pickerDates.Add(d);
+                }
+
+                // select saved date if present
+                var sel = Preferences.Get(PrefSelectedDate, string.Empty);
+                if (!string.IsNullOrWhiteSpace(sel) && DateTime.TryParse(sel, out var parsed))
+                {
+                    var idx = _pickerDates.FindIndex(x => x == parsed.Date);
+                    if (idx >= 0)
+                        picker.SelectedIndex = idx;
+                }
+                else
+                {
+                    picker.SelectedIndex = _pickerDates.Count - 1; // today
+                }
+            }
         }
         catch
         {
@@ -58,7 +109,7 @@ public partial class SettingsPage : ContentPage
             label.Text = e.Value ? "Male" : "Female";
     }
 
-    void OnSaveClicked(object sender, EventArgs e)
+    async void OnSaveClicked(object sender, EventArgs e)
     {
         try
         {
@@ -89,11 +140,47 @@ public partial class SettingsPage : ContentPage
             Preferences.Set(PrefWeeklyChange, weekly?.Text ?? string.Empty);
             Preferences.Set(PrefGenderIsMale, genderSwitch?.IsToggled ?? false);
 
-            DisplayAlert("Settings", "Saved.", "OK");
+            // save activity selection
+            var activity = this.FindByName<Picker>("ActivityPicker");
+            if (activity != null && activity.SelectedIndex >= 0 && activity.SelectedIndex < activity.Items.Count)
+            {
+                Preferences.Set(PrefActivityLevel, activity.Items[activity.SelectedIndex]);
+            }
+
+            // save selected day preference
+            var picker = this.FindByName<Picker>("DayPicker");
+            if (picker != null && picker.SelectedIndex >= 0 && picker.SelectedIndex < _pickerDates.Count)
+            {
+                Preferences.Set(PrefSelectedDate, _pickerDates[picker.SelectedIndex].ToString("o"));
+            }
+
+            await DisplayAlert("Settings", "Saved.", "OK");
+
+            // return to previous page (Dashboard) so it can refresh and show updated recommended calories
+            if (Navigation.NavigationStack.Count > 0)
+                await Navigation.PopAsync();
         }
         catch
         {
-            DisplayAlert("Settings", "Unable to save settings.", "OK");
+            await DisplayAlert("Settings", "Unable to save settings.", "OK");
         }
+    }
+
+    private async void OnClearDayClicked(object? sender, EventArgs e)
+    {
+        var picker = this.FindByName<Picker>("DayPicker");
+        if (picker == null || picker.SelectedIndex < 0 || picker.SelectedIndex >= _pickerDates.Count)
+        {
+            await DisplayAlert("Error", "Please select a day to clear.", "OK");
+            return;
+        }
+
+        var selectedDate = _pickerDates[picker.SelectedIndex];
+        bool ok = await DisplayAlert("Confirm", $"Remove all entries for {selectedDate:d}?", "Yes", "No");
+        if (!ok) return;
+
+        var app = Application.Current as App;
+        app?.RemoveEntriesForDate(selectedDate);
+        await DisplayAlert("Cleared", $"Entries for {selectedDate:d} removed.", "OK");
     }
 }

@@ -37,13 +37,20 @@
             <Label Text="Dashboard" FontSize="24" HorizontalOptions="Center" />
             <Label x:Name="WelcomeLabel" Text="Welcome!" HorizontalOptions="Center" />
 
-            <Label Text="Calories by Meal" FontAttributes="Bold" />
+            <HorizontalStackLayout Spacing="12" VerticalOptions="Center" HorizontalOptions="Fill">
+                <Label Text="BMR:" FontAttributes="Bold" VerticalTextAlignment="Center" />
+                <Label x:Name="BMRValue" Text="--" FontAttributes="Bold" VerticalTextAlignment="Center" HorizontalOptions="EndAndExpand" />
+            </HorizontalStackLayout>
+            <HorizontalStackLayout Spacing="12" VerticalOptions="Center" HorizontalOptions="Fill">
+                <Label Text="Recommended Calories:" FontAttributes="Bold" VerticalTextAlignment="Center" />
+                <Label x:Name="RecommendedCaloriesValue" Text="--" FontAttributes="Bold" VerticalTextAlignment="Center" HorizontalOptions="EndAndExpand" />
+            </HorizontalStackLayout>
             <GraphicsView x:Name="MealBarChart" HeightRequest="240" HorizontalOptions="Fill" Margin="0,0,0,6" />
 
             <Label Text="Daily Calories (Last 7 days)" FontAttributes="Bold" />
             <GraphicsView x:Name="HistoryBarChart" HeightRequest="240" HorizontalOptions="Fill" Margin="0,0,0,6" />
 
-            <Label Text="Macro Breakdown" FontAttributes="Bold" />
+            <Label Text="Macro Breakdown (Recommended)" FontAttributes="Bold" />
             <GraphicsView x:Name="MacroPieChart" HeightRequest="240" HorizontalOptions="Fill" Margin="0,0,0,6" />
 
         </VerticalStackLayout>
