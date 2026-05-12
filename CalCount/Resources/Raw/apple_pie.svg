@@ -1,0 +1,31 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="200" height="200" fill="#fffacd"/>
+
+  <!-- Pie crust -->
+  <ellipse cx="100" cy="110" rx="50" ry="45" fill="#d4a574" stroke="#8b6914" stroke-width="2"/>
+
+  <!-- Crust texture -->
+  <path d="M 60 110 Q 70 115 80 110" stroke="#c19a6b" stroke-width="1" fill="none" opacity="0.5"/>
+  <path d="M 85 95 Q 95 100 105 95" stroke="#c19a6b" stroke-width="1" fill="none" opacity="0.5"/>
+  <path d="M 110 120 Q 120 115 130 120" stroke="#c19a6b" stroke-width="1" fill="none" opacity="0.5"/>
+
+  <!-- Filling -->
+  <ellipse cx="100" cy="110" rx="45" ry="38" fill="#cd7f32"/>
+
+  <!-- Apple slices visible -->
+  <ellipse cx="75" cy="95" rx="12" ry="15" fill="#dc143c" stroke="#8b0000" stroke-width="1"/>
+  <ellipse cx="100" cy="115" rx="14" ry="16" fill="#ff6347" stroke="#8b0000" stroke-width="1"/>
+  <ellipse cx="125" cy="100" rx="12" ry="14" fill="#c41e3a" stroke="#8b0000" stroke-width="1"/>
+
+  <!-- Cinnamon sugar sparkle -->
+  <circle cx="80" cy="85" r="2" fill="#d2b48c"/>
+  <circle cx="110" cy="125" r="2" fill="#d2b48c"/>
+  <circle cx="130" cy="110" r="2" fill="#d2b48c"/>
+
+  <!-- Crust rim detail -->
+  <ellipse cx="100" cy="148" rx="48" ry="8" fill="none" stroke="#8b6914" stroke-width="2"/>
+
+  <!-- Label -->
+  <text x="100" y="170" font-size="16" font-weight="bold" text-anchor="middle" fill="#333">Apple Pie</text>
+</svg>

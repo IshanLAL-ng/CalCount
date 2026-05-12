@@ -1,0 +1,22 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="200" height="200" fill="#fff5f0"/>
+
+  <!-- Grill marks -->
+  <line x1="50" y1="80" x2="150" y2="80" stroke="#666" stroke-width="2"/>
+  <line x1="50" y1="95" x2="150" y2="95" stroke="#666" stroke-width="2"/>
+  <line x1="50" y1="110" x2="150" y2="110" stroke="#666" stroke-width="2"/>
+
+  <!-- Chicken breast 1 -->
+  <ellipse cx="75" cy="90" rx="35" ry="45" fill="#d4845c" stroke="#8b5a2b" stroke-width="2"/>
+
+  <!-- Chicken breast 2 -->
+  <ellipse cx="125" cy="100" rx="35" ry="45" fill="#cd7f32" stroke="#8b5a2b" stroke-width="2"/>
+
+  <!-- Highlight -->
+  <ellipse cx="70" cy="70" rx="15" ry="20" fill="#f0ad4e" opacity="0.6"/>
+  <ellipse cx="120" cy="80" rx="15" ry="20" fill="#f0ad4e" opacity="0.6"/>
+
+  <!-- Label -->
+  <text x="100" y="170" font-size="16" font-weight="bold" text-anchor="middle" fill="#333">Grilled Chicken</text>
+</svg>

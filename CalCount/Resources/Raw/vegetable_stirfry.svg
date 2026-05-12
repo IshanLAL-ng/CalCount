@@ -1,0 +1,30 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="200" height="200" fill="#fffacd"/>
+
+  <!-- Wok -->
+  <ellipse cx="100" cy="100" rx="55" ry="50" fill="#c0c0c0" stroke="#808080" stroke-width="2"/>
+  <path d="M 60 100 Q 55 130 75 140 L 125 140 Q 145 130 140 100" fill="#a9a9a9" stroke="#696969" stroke-width="1"/>
+
+  <!-- Broccoli -->
+  <circle cx="70" cy="85" r="12" fill="#228b22"/>
+  <line x1="70" y1="97" x2="70" y2="110" stroke="#1a5c1a" stroke-width="2"/>
+
+  <!-- Bell pepper (red) -->
+  <rect x="105" y="75" width="20" height="25" rx="3" fill="#ff4500" stroke="#cc3300" stroke-width="1.5"/>
+  <polygon points="115,75 110,70 120,70" fill="#ff6347"/>
+
+  <!-- Carrot slices (orange) -->
+  <circle cx="85" cy="110" r="8" fill="#ff8c00" stroke="#cc6600" stroke-width="1"/>
+  <circle cx="95" cy="95" r="8" fill="#ff8c00" stroke="#cc6600" stroke-width="1"/>
+
+  <!-- Garlic (white) -->
+  <circle cx="120" cy="100" r="6" fill="#fffacd" stroke="#daa520" stroke-width="1"/>
+
+  <!-- Sesame oil droplets -->
+  <circle cx="75" cy="75" r="3" fill="#d4af37" opacity="0.8"/>
+  <circle cx="110" cy="120" r="3" fill="#d4af37" opacity="0.8"/>
+
+  <!-- Label -->
+  <text x="100" y="170" font-size="14" font-weight="bold" text-anchor="middle" fill="#333">Vegetable Stir Fry</text>
+</svg>

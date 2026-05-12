@@ -1,0 +1,28 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="200" height="200" fill="#fff5f0"/>
+
+  <!-- Pot -->
+  <ellipse cx="100" cy="110" rx="60" ry="40" fill="#8b0000" stroke="#4a0000" stroke-width="2"/>
+  <path d="M 50 110 Q 50 130 60 135 L 140 135 Q 150 130 150 110" fill="#a52a2a" stroke="#4a0000" stroke-width="2"/>
+
+  <!-- Pot rim -->
+  <ellipse cx="100" cy="110" rx="60" ry="15" fill="none" stroke="#4a0000" stroke-width="2"/>
+
+  <!-- Beef chunks -->
+  <rect x="70" y="95" width="15" height="15" fill="#5c4033" stroke="#3e2723" stroke-width="1"/>
+  <rect x="100" y="100" width="18" height="18" fill="#6d4c41" stroke="#3e2723" stroke-width="1"/>
+  <rect x="85" y="115" width="16" height="16" fill="#8d6e63" stroke="#3e2723" stroke-width="1"/>
+
+  <!-- Vegetables (carrots) -->
+  <ellipse cx="120" cy="105" rx="8" ry="12" fill="#ff7f50" transform="rotate(45 120 105)"/>
+  <circle cx="130" cy="120" r="6" fill="#ffa500"/>
+
+  <!-- Steam -->
+  <path d="M 80 90 Q 75 75 80 60" stroke="#d3d3d3" stroke-width="2" fill="none" opacity="0.7"/>
+  <path d="M 100 85 Q 95 70 100 55" stroke="#d3d3d3" stroke-width="2" fill="none" opacity="0.7"/>
+  <path d="M 120 90 Q 115 75 120 60" stroke="#d3d3d3" stroke-width="2" fill="none" opacity="0.7"/>
+
+  <!-- Label -->
+  <text x="100" y="170" font-size="16" font-weight="bold" text-anchor="middle" fill="#333">Beef Stew</text>
+</svg>
