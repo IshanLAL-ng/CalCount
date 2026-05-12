@@ -6,7 +6,7 @@
 
     <ScrollView>
         <VerticalStackLayout Padding="24" Spacing="12">
-            <Label Text="Savory Recipes" FontSize="24" HorizontalOptions="Center" />
+            <Label Text="{Binding Title}" FontSize="24" HorizontalOptions="Center" />
 
             <!-- Static list of savory recipe buttons -->
             <VerticalStackLayout Spacing="8">

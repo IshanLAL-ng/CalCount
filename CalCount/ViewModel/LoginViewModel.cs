@@ -6,6 +6,8 @@ namespace CalCount.ViewModel;
 public partial class LoginViewModel : ObservableObject
 {
     [ObservableProperty]
+    private string title = new Models.Entities.LoginEntity().Title;
+    [ObservableProperty]
     private string username = string.Empty;
 
     [ObservableProperty]

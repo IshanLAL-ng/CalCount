@@ -6,7 +6,7 @@
 
     <ScrollView>
         <VerticalStackLayout Padding="24" Spacing="12">
-            <Label Text="Add Food / Drink" FontSize="24" HorizontalOptions="Center" />
+            <Label Text="{Binding Title}" FontSize="24" HorizontalOptions="Center" />
 
             <Label Text="Name" />
             <Entry x:Name="NameEntry" Placeholder="e.g., Banana" />

@@ -8,7 +8,7 @@
         <VerticalStackLayout Padding="24" Spacing="12">
 
             <!-- Read-only title -->
-            <Label Text="{Binding Title}" FontSize="20" FontAttributes="Bold" />
+            <Label Text="{Binding TitleText}" FontSize="20" FontAttributes="Bold" />
 
             <!-- Static image placeholder (hard-coded) -->
             <Frame HasShadow="True" CornerRadius="8" Padding="8" HorizontalOptions="Center">

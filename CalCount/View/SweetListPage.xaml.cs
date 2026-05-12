@@ -5,7 +5,7 @@ public partial class SweetListPage : ContentPage
     public SweetListPage()
     {
         InitializeComponent();
-        BindingContext = new ViewModel.RecipesViewModel();
+        BindingContext = new ViewModel.RecipesViewModel(); // Updated binding context
     }
 
     private async void OnRecipeClicked(object? sender, EventArgs e)

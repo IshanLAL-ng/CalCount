@@ -5,6 +5,8 @@ namespace CalCount.ViewModel;
 public partial class RecipeDetailViewModel : ObservableObject
 {
     [ObservableProperty]
+    private string titleText = new Models.Entities.RecipeDetailEntity().Title;
+    [ObservableProperty]
     private string title = string.Empty;
 
     [ObservableProperty]

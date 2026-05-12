@@ -5,6 +5,8 @@ namespace CalCount.ViewModel;
 
 public partial class RecipesViewModel : ObservableObject
 {
+    [ObservableProperty]
+    private string title = new Models.Entities.RecipesEntity().Title;
     [RelayCommand]
     private async Task OpenSavoryAsync()
     {

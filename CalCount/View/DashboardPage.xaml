@@ -34,7 +34,7 @@
                         HorizontalOptions="EndAndExpand" />
             </HorizontalStackLayout>
 
-            <Label Text="Dashboard" FontSize="24" HorizontalOptions="Center" />
+            <Label Text="{Binding Title}" FontSize="24" HorizontalOptions="Center" />
             <Label x:Name="WelcomeLabel" Text="Welcome!" HorizontalOptions="Center" />
 
             <HorizontalStackLayout Spacing="12" VerticalOptions="Center" HorizontalOptions="Fill">
