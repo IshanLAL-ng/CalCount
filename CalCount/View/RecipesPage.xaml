@@ -5,10 +5,10 @@
     xmlns:viewmodels="clr-namespace:CalCount.ViewModel"
     x:Class="CalCount.View.RecipesPage"
     x:DataType="viewmodels:RecipesViewModel"
-    Title="Recipes">
+    Title="{Binding Title}">
 
     <ContentPage.BindingContext>
-        <viewmodels:RecipesViewModel />
+        <viewmodels:RecipeListViewModel />
     </ContentPage.BindingContext>
 
     <ScrollView>
