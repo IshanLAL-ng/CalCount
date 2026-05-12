@@ -12,6 +12,7 @@ namespace CalCount.View;
 public partial class DashboardPage : ContentPage
 {
     private string username = string.Empty;
+    private DateTime _currentSelectedDate = DateTime.Now.Date;
     // Selected date is read from Settings (Preferences) now
 
     public DashboardPage()
@@ -209,6 +210,9 @@ class StackedBarDrawable : IDrawable
         if (!string.IsNullOrWhiteSpace(sel) && DateTime.TryParse(sel, out var parsed))
             selectedDate = parsed.Date;
 
+        // Store the current selected date for use in navigation
+        _currentSelectedDate = selectedDate;
+
         var entries = app?.CalorieEntries.Where(e => e.Date == selectedDate).ToList() ?? new List<Models.CalorieEntry>();
 
         // Debug: log the total entries and filtered entries
@@ -371,7 +375,8 @@ class StackedBarDrawable : IDrawable
 
     private async void OnAddFoodClicked(object? sender, EventArgs e)
     {
-        await Shell.Current.GoToAsync("addfood");
+        var dateParam = Uri.EscapeDataString(_currentSelectedDate.ToString("o"));
+        await Shell.Current.GoToAsync($"addfood?date={dateParam}");
     }
 
     private async void OnSettingsClicked(object? sender, EventArgs e)
