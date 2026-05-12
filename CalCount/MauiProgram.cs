@@ -15,6 +15,9 @@ namespace CalCount
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
+            // Register SQLite database repository
+            builder.Services.AddSingleton<Services.IDatabaseRepository, Services.SqliteDatabaseRepository>();
+
 #if DEBUG
     		builder.Logging.AddDebug();
 #endif

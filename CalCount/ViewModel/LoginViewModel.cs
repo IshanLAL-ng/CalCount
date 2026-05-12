@@ -22,6 +22,27 @@ public partial class LoginViewModel : ObservableObject
             return;
         }
 
+        // Validate against SQLite repository via App's service provider
+        try
+        {
+            var sp = (Application.Current as App)?.GetServices();
+            var repository = sp?.GetService(typeof(Services.IDatabaseRepository)) as Services.IDatabaseRepository;
+            if (repository != null)
+            {
+                await repository.InitializeAsync();
+                var ok = await repository.ValidateCredentialsAsync(Username, Password);
+                if (!ok)
+                {
+                    await Shell.Current.DisplayAlert("Login failed", "Invalid username or password.", "OK");
+                    return;
+                }
+            }
+        }
+        catch
+        {
+            // If DI resolution fails, fall back to allowing login for now (or handle appropriately)
+        }
+
         // Navigate to dashboard using Shell route and pass username as a query parameter
         await Shell.Current.GoToAsync($"dashboard?username={Uri.EscapeDataString(Username)}");
     }

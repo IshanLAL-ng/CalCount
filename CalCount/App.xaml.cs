@@ -70,6 +70,24 @@ namespace CalCount
             LoadEntries();
         }
 
+        // small helper to allow retrieving services from the running app
+        public IServiceProvider? GetServices()
+        {
+            // Use MauiApplication.Current to access host services if available
+            try
+            {
+                var field = typeof(Microsoft.Maui.Controls.Application).Assembly.GetType("Microsoft.Maui.MauiApplication")
+                    ?.GetProperty("Current", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public);
+                var current = field?.GetValue(null);
+                var servicesProp = current?.GetType().GetProperty("Services");
+                return servicesProp?.GetValue(current) as IServiceProvider;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         protected override Window CreateWindow(IActivationState? activationState)
         {
             // Use AppShell as the application's main Shell so Shell.Current is available
