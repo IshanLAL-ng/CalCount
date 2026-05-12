@@ -9,8 +9,8 @@ public partial class RecipeDetailPage : ContentPage
     public RecipeDetailPage()
     {
         InitializeComponent();
-        vm = new ViewModel.RecipeDetailViewModel();
-        BindingContext = vm;
+        vm = new ViewModel.RecipeDetailViewModel(); // Initialize ViewModel
+        BindingContext = vm; // Set BindingContext to ViewModel
     }
 
     public string Title

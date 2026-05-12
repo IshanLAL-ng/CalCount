@@ -6,7 +6,7 @@
 
     <ScrollView>
         <VerticalStackLayout Padding="24" Spacing="12">
-            <Label Text="Settings" FontSize="24" HorizontalOptions="Center" />
+            <Label Text="{Binding Title}" FontSize="24" HorizontalOptions="Center" />
 
             <Label Text="Height (in)" />
             <Entry x:Name="HeightEntry" Placeholder="e.g. 69" Keyboard="Numeric" />

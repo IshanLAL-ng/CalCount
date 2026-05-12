@@ -13,7 +13,7 @@
 
     <ScrollView>
         <VerticalStackLayout Padding="24" Spacing="18" VerticalOptions="Center">
-            <Label Text="Recipes" FontSize="24" HorizontalOptions="Center" />
+            <Label Text="{Binding Title}" FontSize="24" HorizontalOptions="Center" />
 
             <HorizontalStackLayout HorizontalOptions="Center" Spacing="12">
                 <Button Text="Savory" Command="{Binding OpenSavoryCommand}" />

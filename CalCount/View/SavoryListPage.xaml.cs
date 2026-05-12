@@ -5,6 +5,7 @@ public partial class SavoryListPage : ContentPage
     public SavoryListPage()
     {
         InitializeComponent();
+        // Use a dedicated RecipesViewModel which now exposes a Title
         BindingContext = new ViewModel.RecipesViewModel();
     }
 

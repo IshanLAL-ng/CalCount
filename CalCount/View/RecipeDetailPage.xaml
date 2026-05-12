@@ -8,18 +8,18 @@
         <VerticalStackLayout Padding="24" Spacing="12">
 
             <!-- Read-only title -->
-            <Label x:Name="TitleLabel" FontSize="20" FontAttributes="Bold" />
+            <Label Text="{Binding TitleText}" FontSize="20" FontAttributes="Bold" />
 
             <!-- Static image placeholder (hard-coded) -->
             <Frame HasShadow="True" CornerRadius="8" Padding="8" HorizontalOptions="Center">
-                <Image x:Name="RecipeImage" WidthRequest="300" HeightRequest="200" Aspect="AspectFill" />
+                <Image Source="{Binding ImageUrl}" WidthRequest="300" HeightRequest="200" Aspect="AspectFill" />
             </Frame>
 
             <Label Text="Ingredients" FontAttributes="Bold" />
-            <Label x:Name="IngredientsLabel" LineBreakMode="WordWrap" />
+            <Label Text="{Binding Ingredients}" LineBreakMode="WordWrap" />
 
             <Label Text="Instructions" FontAttributes="Bold" />
-            <Label x:Name="InstructionsLabel" LineBreakMode="WordWrap" />
+            <Label Text="{Binding Instructions}" LineBreakMode="WordWrap" />
 
         </VerticalStackLayout>
     </ScrollView>
