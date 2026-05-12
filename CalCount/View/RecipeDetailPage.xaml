@@ -2,24 +2,41 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CalCount.View.RecipeDetailPage"
-             Title="Recipe Detail">
+             Title="Recipe Detail"
+             BackgroundColor="#fafafa">
 
     <ScrollView>
         <VerticalStackLayout Padding="24" Spacing="12">
 
             <!-- Read-only title -->
-            <Label Text="{Binding TitleText}" FontSize="20" FontAttributes="Bold" />
+            <Label Text="{Binding TitleText}" FontSize="20" FontAttributes="Bold" TextColor="#333" />
 
-            <!-- Static image placeholder (hard-coded) -->
-            <Frame HasShadow="True" CornerRadius="8" Padding="8" HorizontalOptions="Center">
-                <Image Source="{Binding ImageUrl}" WidthRequest="300" HeightRequest="200" Aspect="AspectFill" />
+            <!-- Recipe image with frame -->
+            <Frame HasShadow="True" CornerRadius="12" Padding="0" BorderColor="#e0e0e0" HorizontalOptions="Center">
+                <Image Source="{Binding ImageUrl}" 
+                       WidthRequest="280" 
+                       HeightRequest="200" 
+                       Aspect="AspectFill"
+                       Margin="0"/>
             </Frame>
 
-            <Label Text="Ingredients" FontAttributes="Bold" />
-            <Label Text="{Binding Ingredients}" LineBreakMode="WordWrap" />
+            <!-- Ingredients section -->
+            <Label Text="Ingredients" FontAttributes="Bold" FontSize="16" TextColor="#333" />
+            <Frame BorderColor="#f0f0f0" CornerRadius="8" Padding="12" HasShadow="False">
+                <Label Text="{Binding Ingredients}" 
+                       LineBreakMode="WordWrap"
+                       TextColor="#555"
+                       FontSize="13" />
+            </Frame>
 
-            <Label Text="Instructions" FontAttributes="Bold" />
-            <Label Text="{Binding Instructions}" LineBreakMode="WordWrap" />
+            <!-- Instructions section -->
+            <Label Text="Instructions" FontAttributes="Bold" FontSize="16" TextColor="#333" />
+            <Frame BorderColor="#f0f0f0" CornerRadius="8" Padding="12" HasShadow="False">
+                <Label Text="{Binding Instructions}" 
+                       LineBreakMode="WordWrap"
+                       TextColor="#555"
+                       FontSize="13" />
+            </Frame>
 
         </VerticalStackLayout>
     </ScrollView>
