@@ -157,6 +157,7 @@ public partial class SettingsPage : ContentPage
             await DisplayAlert("Settings", "Saved.", "OK");
 
             // return to previous page (Dashboard) so it can refresh and show updated recommended calories
+            // The Dashboard's OnAppearing will be called automatically and will regenerate charts
             if (Navigation.NavigationStack.Count > 0)
                 await Navigation.PopAsync();
         }

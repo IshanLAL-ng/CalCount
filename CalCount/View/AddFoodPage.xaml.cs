@@ -14,6 +14,12 @@ public partial class AddFoodPage : ContentPage
         int.TryParse(caloriesText, out var calories);
         var meal = MealPicker?.SelectedItem as string ?? "Breakfast";
 
+        if (calories == 0)
+        {
+            await DisplayAlert("Validation", "Please enter valid calories.", "OK");
+            return;
+        }
+
         var entry = new Models.CalorieEntry
         {
             Name = name,
@@ -22,11 +28,21 @@ public partial class AddFoodPage : ContentPage
             Date = DateTime.Now.Date
         };
 
-        // Save to a simple in-memory store on the App class (for demo)
-        (Application.Current as App)?.AddCalorieEntry(entry);
+        // Save to a simple in-memory store on the App class
+        var app = Application.Current as App;
+        app?.AddCalorieEntry(entry);
 
-        await DisplayAlert("Saved", "Entry saved.", "OK");
-        await Navigation.PopAsync();
+        System.Diagnostics.Debug.WriteLine($"[AddFood] Added entry: {name}, {calories} cal, {meal}, {DateTime.Now.Date:yyyy-MM-dd}");
+        System.Diagnostics.Debug.WriteLine($"[AddFood] Total entries in app after add: {app?.CalorieEntries.Count ?? 0}");
+
+        await DisplayAlert("Saved", $"Added {calories} cal to {meal}.", "OK");
+
+        // Clear the form for next entry
+        NameEntry.Text = string.Empty;
+        CaloriesEntry.Text = string.Empty;
+
+        // Navigate back to dashboard to refresh the graphs with the new entry
+        await Shell.Current.GoToAsync("dashboard");
     }
 
     protected override void OnAppearing()
