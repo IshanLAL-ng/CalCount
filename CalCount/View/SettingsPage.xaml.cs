@@ -78,7 +78,8 @@ public partial class SettingsPage : ContentPage
                 var dates = Enumerable.Range(0, 7).Select(i => today.AddDays(-6 + i)).ToList();
                 foreach (var d in dates)
                 {
-                    picker.Items.Add(d.DayOfWeek.ToString());
+                    // Display date with day name and full date for clarity
+                    picker.Items.Add($"{d.DayOfWeek} ({d:MM/dd/yyyy})");
                     _pickerDates.Add(d);
                 }
 
@@ -86,9 +87,17 @@ public partial class SettingsPage : ContentPage
                 var sel = Preferences.Get(PrefSelectedDate, string.Empty);
                 if (!string.IsNullOrWhiteSpace(sel) && DateTime.TryParse(sel, out var parsed))
                 {
-                    var idx = _pickerDates.FindIndex(x => x == parsed.Date);
+                    var idx = _pickerDates.FindIndex(x => x.Date == parsed.Date);
                     if (idx >= 0)
+                    {
                         picker.SelectedIndex = idx;
+                    }
+                    else
+                    {
+                        // If saved date not found in range, set to today
+                        var todayIdx = _pickerDates.FindIndex(x => x.Date == today);
+                        picker.SelectedIndex = todayIdx >= 0 ? todayIdx : _pickerDates.Count - 1;
+                    }
                 }
                 else
                 {
@@ -151,7 +160,9 @@ public partial class SettingsPage : ContentPage
             var picker = this.FindByName<Picker>("DayPicker");
             if (picker != null && picker.SelectedIndex >= 0 && picker.SelectedIndex < _pickerDates.Count)
             {
-                Preferences.Set(PrefSelectedDate, _pickerDates[picker.SelectedIndex].ToString("o"));
+                var selectedDate = _pickerDates[picker.SelectedIndex];
+                Preferences.Set(PrefSelectedDate, selectedDate.ToString("o"));
+                System.Diagnostics.Debug.WriteLine($"[Settings] Saved selected date: {selectedDate:yyyy-MM-dd} (index: {picker.SelectedIndex})");
             }
 
             await DisplayAlert("Settings", "Saved.", "OK");
