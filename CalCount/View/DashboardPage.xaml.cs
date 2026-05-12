@@ -150,6 +150,51 @@ class StackedBarDrawable : IDrawable
         UpdateCharts();
     }
 
+    private void SaveChartState()
+    {
+        // Save chart state to preferences so it persists when settings are changed
+        try
+        {
+            var app = Application.Current as App;
+            DateTime selectedDate = DateTime.Now.Date;
+            var sel = Preferences.Get("SelectedDate", string.Empty);
+            if (!string.IsNullOrWhiteSpace(sel) && DateTime.TryParse(sel, out var parsed))
+                selectedDate = parsed.Date;
+
+            var entries = app?.CalorieEntries.Where(e => e.Date == selectedDate).ToList() ?? new List<Models.CalorieEntry>();
+
+            // Store the selected date so we know which data to display
+            Preferences.Set("DashboardSelectedDate", selectedDate.ToString("o"));
+
+            // Store meal data
+            var meals = new[] { "Breakfast", "Lunch", "Dinner", "Snack" };
+            for (int i = 0; i < meals.Length; i++)
+            {
+                var items = entries.Where(e => e.Meal == meals[i]).ToList();
+                var mealCalories = string.Join(",", items.Select(it => it.Calories.ToString(CultureInfo.InvariantCulture)));
+                var mealNames = string.Join("|", items.Select(it => string.IsNullOrWhiteSpace(it.Name) ? "Item" : it.Name));
+                Preferences.Set($"DashboardMeal{i}Calories", mealCalories);
+                Preferences.Set($"DashboardMeal{i}Names", mealNames);
+            }
+
+            // Store history data (last 7 days)
+            var historyDates = Enumerable.Range(0, 7).Select(i => selectedDate.AddDays(-6 + i)).ToList();
+            var historyTotals = historyDates.Select(d => (float)(app?.CalorieEntries.Where(e => e.Date == d).Sum(en => en.Calories) ?? 0)).ToList();
+            var historyLabels = historyDates.Select(d => d.ToString("ddd")).ToList();
+            Preferences.Set("DashboardHistoryTotals", string.Join(",", historyTotals.Select(h => h.ToString(CultureInfo.InvariantCulture))));
+            Preferences.Set("DashboardHistoryLabels", string.Join(",", historyLabels));
+
+            // Store macro data
+            var totalToday = entries.Sum(e => e.Calories);
+            var macroTotals = new[] { totalToday * 0.4f, totalToday * 0.3f, totalToday * 0.3f };
+            Preferences.Set("DashboardMacroTotals", string.Join(",", macroTotals.Select(m => m.ToString(CultureInfo.InvariantCulture))));
+        }
+        catch
+        {
+            // Silently fail if save fails - charts will be regenerated on next load
+        }
+    }
+
     private void UpdateCharts()
     {
         var mealView = this.FindByName("MealBarChart") as GraphicsView;
@@ -165,6 +210,15 @@ class StackedBarDrawable : IDrawable
             selectedDate = parsed.Date;
 
         var entries = app?.CalorieEntries.Where(e => e.Date == selectedDate).ToList() ?? new List<Models.CalorieEntry>();
+
+        // Debug: log the total entries and filtered entries
+        System.Diagnostics.Debug.WriteLine($"[Dashboard] Total entries in app: {app?.CalorieEntries.Count ?? 0}");
+        System.Diagnostics.Debug.WriteLine($"[Dashboard] Selected date: {selectedDate:yyyy-MM-dd}");
+        System.Diagnostics.Debug.WriteLine($"[Dashboard] Filtered entries for date: {entries.Count}");
+        foreach (var e in entries)
+        {
+            System.Diagnostics.Debug.WriteLine($"  - {e.Name}: {e.Calories} cal ({e.Meal}) on {e.Date:yyyy-MM-dd}");
+        }
 
         // Calculate BMR from settings (BMR formula) and compute activity-adjusted recommended calories (TDEE)
         var bmrLabel = this.FindByName<Label>("BMRValue");
@@ -289,6 +343,9 @@ class StackedBarDrawable : IDrawable
             macroView.Drawable = new SmallPieDrawable(macroTotals, macroLabels);
             macroView.Invalidate();
         }
+
+        // Save the chart state so it persists across navigation and settings changes
+        SaveChartState();
     }
 
     // Day selection and clearing moved to Settings page
